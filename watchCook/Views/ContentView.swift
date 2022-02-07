@@ -23,7 +23,7 @@ struct ContentView: View {
             List {
                 ForEach(recipes) { recipe in
                     NavigationLink {
-                        RecipeDetail()
+                        RecipeDetail(recipe: recipe)
                     } label: {
                         RecipeRow(text: recipe.title)
                     }
@@ -31,7 +31,7 @@ struct ContentView: View {
             }
             .navigationTitle("레시피 목록")
             .toolbar {
-                NavigationLink("레시피 추가", destination: RecipeDetail())
+                NavigationLink("레시피 추가", destination: RecipeDetail(recipe: Recipe()))
             }
         }
     }

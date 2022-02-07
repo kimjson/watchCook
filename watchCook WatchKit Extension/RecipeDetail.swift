@@ -86,21 +86,26 @@ struct RecipeDetail_Previews: PreviewProvider {
     static var previews: some View {
         RecipeDetail(recipe: Recipe(
             id: 1,
+            nextStepId: 5,
             title: "7분김치찌개",
             steps: [
                 Step(
+                    id: 1,
                     text: "냄비에 식용유 1숟, 대파 1컵, 돼지고기 200그람, 고추가루 1숟, 설탕 1/2숟, 간장 2숟을 넣는다.",
                     seconds: 0
                 ),
                 Step(
+                    id: 2,
                     text: "약불에서 완전히 익을 때까지 볶는다.",
                     seconds: 0
                 ),
                 Step(
+                    id: 3,
                     text: "김치 200그람, 김치국물 약간, 양파 1/4개, 물 150밀리리터, 다진마늘 1숟을 넣어 섞는다.",
                     seconds: 0
                 ),
                 Step(
+                    id: 4,
                     text: "뚜껑을 덮고 7분간 끓인다.",
                     seconds: 420
                 ),
