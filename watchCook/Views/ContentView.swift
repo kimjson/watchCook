@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+func noop() {
+    
+}
+
 struct ContentView: View {
     @EnvironmentObject var modelData: ModelData
     var recipes: [Recipe] {
@@ -24,9 +28,11 @@ struct ContentView: View {
                         RecipeRow(text: recipe.title)
                     }
                 }
-
             }
             .navigationTitle("레시피 목록")
+            .toolbar {
+                NavigationLink("레시피 추가", destination: RecipeDetail())
+            }
         }
     }
 }
