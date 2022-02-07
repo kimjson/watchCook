@@ -8,8 +8,32 @@
 import SwiftUI
 
 struct RecipeDetail: View {
+    var recipe: Recipe?
+    
+    var title: String {
+        recipe?.title ?? "이름없는 레시피"
+    }
+    var steps: [Step] {
+        recipe?.steps ?? []
+    }
+
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List {
+                ForEach((0..<steps.count)) { i in
+                    NavigationLink {
+                        Text(steps[i].text)
+                    } label: {
+                        Text(steps[i].text)
+                    }
+                }
+            }
+            .navigationTitle(title)
+            .toolbar {
+                NavigationLink("단계 추가", destination: Text("추가된 단계"))
+            }
+        }
     }
 }
 
