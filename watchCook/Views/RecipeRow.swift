@@ -1,6 +1,6 @@
 //
 //  RecipeRow.swift
-//  watchCook WatchKit Extension
+//  watchCook
 //
 //  Created by jaeseong on 2022/02/03.
 //
