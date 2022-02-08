@@ -17,17 +17,8 @@ struct RecipeDetail: View {
         recipe.steps
     }
     
-    @State var editedStep: Step? = nil
-    
-    func createButtonAction(step: Step) -> () -> Void {
-        func action() {
-            editedStep = step
-        }
-        return action
-    }
-    
-    func handleSheetDismiss() {
-        editedStep = nil
+    func handleAddStep() {
+        
     }
 
     var body: some View {
@@ -36,16 +27,13 @@ struct RecipeDetail: View {
                 HStack {
                     Text(step.text)
                     Spacer()
-                    Button("수정", action: createButtonAction(step: step))
+                    Button("수정", action: noop)
                 }
             }
         }
         .navigationTitle(title)
         .toolbar {
-            NavigationLink("단계 추가", destination: Text("추가된 단계"))
-        }
-        .sheet(item: $editedStep, onDismiss: handleSheetDismiss) { item in
-            StepEditSheet()
+            Button("단계 추가", action: handleAddStep)
         }
     }
 }
