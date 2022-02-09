@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct watchCookApp: App {
-    @StateObject private var modelData = ModelData()
+    @StateObject private var dataController = DataController()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(modelData)
+                .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
 }

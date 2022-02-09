@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F15014227B3290F00946F50 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F15014127B3290F00946F50 /* CloudKit.framework */; };
+		3F2138F527B234D600CF7B48 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2138F427B234D600CF7B48 /* DataController.swift */; };
+		3F9B1D9F27B3549400B898EF /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2138F427B234D600CF7B48 /* DataController.swift */; };
 		3F9EC87827A68DB200281943 /* watchCookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9EC87727A68DB200281943 /* watchCookApp.swift */; };
 		3F9EC87C27A68DB300281943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F9EC87B27A68DB300281943 /* Assets.xcassets */; };
 		3F9EC87F27A68DB300281943 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F9EC87E27A68DB300281943 /* Preview Assets.xcassets */; };
@@ -17,11 +20,8 @@
 		3F9EC89727A68DB400281943 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9EC89627A68DB400281943 /* ComplicationController.swift */; };
 		3F9EC89927A68DB400281943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F9EC89827A68DB400281943 /* Assets.xcassets */; };
 		3F9EC89C27A68DB400281943 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F9EC89B27A68DB400281943 /* Preview Assets.xcassets */; };
-		3F9EC8AE27A68F8400281943 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9EC8AD27A68F8400281943 /* Recipe.swift */; };
+		3FA610E827B3572D005B4A7B /* watchCookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9EC87727A68DB200281943 /* watchCookApp.swift */; };
 		3FF7BC6B27ABBAD500F8E8B7 /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7BC6A27ABBAD500F8E8B7 /* RecipeDetail.swift */; };
-		3FF7BC7127B09BB300F8E8B7 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7BC7027B09BB300F8E8B7 /* ModelData.swift */; };
-		3FF7BC7227B09BB300F8E8B7 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7BC7027B09BB300F8E8B7 /* ModelData.swift */; };
-		3FF7BC7327B09C4E00F8E8B7 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9EC8AD27A68F8400281943 /* Recipe.swift */; };
 		3FF7BC7727B09FE900F8E8B7 /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7BC7627B09FE900F8E8B7 /* RecipeDetail.swift */; };
 		3FF7BC7827B0A29600F8E8B7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9EC87927A68DB200281943 /* ContentView.swift */; };
 		3FF7BC7927B0A89B00F8E8B7 /* RecipeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7BC6827ABB9CC00F8E8B7 /* RecipeRow.swift */; };
@@ -29,6 +29,12 @@
 		3FF7BC8027B0B51000F8E8B7 /* recipeData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3FF7BC7F27B0B51000F8E8B7 /* recipeData.json */; };
 		3FF7BC8127B0B51000F8E8B7 /* recipeData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3FF7BC7F27B0B51000F8E8B7 /* recipeData.json */; };
 		3FFCC51327B1DA7300672A6E /* StepEditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCC51227B1DA7300672A6E /* StepEditSheet.swift */; };
+		3FFCC51627B1FA4600672A6E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCC51427B1FA4600672A6E /* Model.xcdatamodeld */; };
+		3FFCC51727B1FA4600672A6E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCC51427B1FA4600672A6E /* Model.xcdatamodeld */; };
+		3FFCC53727B22F3100672A6E /* Step+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCC53327B22F3100672A6E /* Step+CoreDataClass.swift */; };
+		3FFCC53827B22F3100672A6E /* Step+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCC53327B22F3100672A6E /* Step+CoreDataClass.swift */; };
+		3FFCC53B27B22F3100672A6E /* Recipe+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCC53527B22F3100672A6E /* Recipe+CoreDataClass.swift */; };
+		3FFCC53C27B22F3100672A6E /* Recipe+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCC53527B22F3100672A6E /* Recipe+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +80,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3F15013F27B3290200946F50 /* watchCook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = watchCook.entitlements; sourceTree = "<group>"; };
+		3F15014127B3290F00946F50 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.2.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
+		3F15014327B3299C00946F50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3F2138F427B234D600CF7B48 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		3F9EC87427A68DB200281943 /* watchCook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = watchCook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F9EC87727A68DB200281943 /* watchCookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = watchCookApp.swift; sourceTree = "<group>"; };
 		3F9EC87927A68DB200281943 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -87,13 +97,14 @@
 		3F9EC89827A68DB400281943 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F9EC89B27A68DB400281943 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3F9EC89D27A68DB400281943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3F9EC8AD27A68F8400281943 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		3FF7BC6827ABB9CC00F8E8B7 /* RecipeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRow.swift; sourceTree = "<group>"; };
 		3FF7BC6A27ABBAD500F8E8B7 /* RecipeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetail.swift; sourceTree = "<group>"; };
-		3FF7BC7027B09BB300F8E8B7 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		3FF7BC7627B09FE900F8E8B7 /* RecipeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetail.swift; sourceTree = "<group>"; };
 		3FF7BC7F27B0B51000F8E8B7 /* recipeData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = recipeData.json; sourceTree = "<group>"; };
 		3FFCC51227B1DA7300672A6E /* StepEditSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepEditSheet.swift; sourceTree = "<group>"; };
+		3FFCC51527B1FA4600672A6E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		3FFCC53327B22F3100672A6E /* Step+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Step+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3FFCC53527B22F3100672A6E /* Recipe+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Recipe+CoreDataClass.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F15014227B3290F00946F50 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +126,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F15014027B3290F00946F50 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F15014127B3290F00946F50 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3F9EC86B27A68DB200281943 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +141,7 @@
 				3F9EC88627A68DB300281943 /* watchCook WatchKit App */,
 				3F9EC89127A68DB400281943 /* watchCook WatchKit Extension */,
 				3F9EC87527A68DB200281943 /* Products */,
+				3F15014027B3290F00946F50 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +158,8 @@
 		3F9EC87627A68DB200281943 /* watchCook */ = {
 			isa = PBXGroup;
 			children = (
+				3F15014327B3299C00946F50 /* Info.plist */,
+				3F15013F27B3290200946F50 /* watchCook.entitlements */,
 				3FF7BC7B27B0B4C600F8E8B7 /* Resources */,
 				3FF7BC7427B09F6200F8E8B7 /* Views */,
 				3FF7BC6F27B09AE800F8E8B7 /* Model */,
@@ -187,8 +210,9 @@
 		3FF7BC6F27B09AE800F8E8B7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3FF7BC7027B09BB300F8E8B7 /* ModelData.swift */,
-				3F9EC8AD27A68F8400281943 /* Recipe.swift */,
+				3FFCC53327B22F3100672A6E /* Step+CoreDataClass.swift */,
+				3FFCC53527B22F3100672A6E /* Recipe+CoreDataClass.swift */,
+				3F2138F427B234D600CF7B48 /* DataController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -207,6 +231,7 @@
 		3FF7BC7B27B0B4C600F8E8B7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3FFCC51427B1FA4600672A6E /* Model.xcdatamodeld */,
 				3FF7BC7F27B0B51000F8E8B7 /* recipeData.json */,
 			);
 			path = Resources;
@@ -346,12 +371,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FFCC51327B1DA7300672A6E /* StepEditSheet.swift in Sources */,
+				3F2138F527B234D600CF7B48 /* DataController.swift in Sources */,
 				3FF7BC7727B09FE900F8E8B7 /* RecipeDetail.swift in Sources */,
 				3FF7BC7927B0A89B00F8E8B7 /* RecipeRow.swift in Sources */,
+				3FFCC53727B22F3100672A6E /* Step+CoreDataClass.swift in Sources */,
+				3FFCC51627B1FA4600672A6E /* Model.xcdatamodeld in Sources */,
+				3FFCC53B27B22F3100672A6E /* Recipe+CoreDataClass.swift in Sources */,
 				3FF7BC7827B0A29600F8E8B7 /* ContentView.swift in Sources */,
 				3F9EC87827A68DB200281943 /* watchCookApp.swift in Sources */,
-				3FF7BC7127B09BB300F8E8B7 /* ModelData.swift in Sources */,
-				3FF7BC7327B09C4E00F8E8B7 /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,12 +386,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FA610E827B3572D005B4A7B /* watchCookApp.swift in Sources */,
+				3F9B1D9F27B3549400B898EF /* DataController.swift in Sources */,
 				3FF7BC7A27B0AB9000F8E8B7 /* RecipeRow.swift in Sources */,
 				3F9EC89327A68DB400281943 /* ContentView.swift in Sources */,
 				3F9EC89727A68DB400281943 /* ComplicationController.swift in Sources */,
-				3F9EC8AE27A68F8400281943 /* Recipe.swift in Sources */,
+				3FFCC53827B22F3100672A6E /* Step+CoreDataClass.swift in Sources */,
+				3FFCC51727B1FA4600672A6E /* Model.xcdatamodeld in Sources */,
 				3FF7BC6B27ABBAD500F8E8B7 /* RecipeDetail.swift in Sources */,
-				3FF7BC7227B09BB300F8E8B7 /* ModelData.swift in Sources */,
+				3FFCC53C27B22F3100672A6E /* Recipe+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,12 +648,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = watchCook/watchCook.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchCook/Preview Content\"";
 				DEVELOPMENT_TEAM = 7TX57ATAJD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = watchCook/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -649,12 +681,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = watchCook/watchCook.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchCook/Preview Content\"";
 				DEVELOPMENT_TEAM = 7TX57ATAJD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = watchCook/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -716,6 +750,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3FFCC51427B1FA4600672A6E /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3FFCC51527B1FA4600672A6E /* Model.xcdatamodel */,
+			);
+			currentVersion = 3FFCC51527B1FA4600672A6E /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3F9EC86C27A68DB200281943 /* Project object */;
 }
