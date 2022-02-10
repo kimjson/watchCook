@@ -35,21 +35,18 @@ public class Recipe: NSManagedObject {
         return title ?? "이름 없는 레시피"
     }
     
-    public static func randomInstance() -> Recipe {
+    public static func randomInstance(context: NSManagedObjectContext? = nil) -> Recipe {
         let titles = ["7분김치찌개", "홍합양송이파스타", "들기름막국수", "들깨칼국수"]
-        let recipe = Recipe()
+        let recipe = context != nil ? Recipe(context: context!) : Recipe()
         recipe.title = titles.randomElement()!
         
-        let step1 = Step.randomInstance()
-        step1.order = 1
+        let steps: [Step] = (1...3).map {
+            let step = Step.randomInstance(context: context)
+            step.order = Int32($0)
+            return step
+        }
         
-        let step2 = Step.randomInstance()
-        step2.order = 2
-        
-        let step3 = Step.randomInstance()
-        step3.order = 3
-        
-        recipe.steps = NSSet(array: [step1, step2, step3])
+        recipe.steps = NSSet(array: steps)
         
         return recipe
     }

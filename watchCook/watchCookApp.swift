@@ -9,8 +9,7 @@ import SwiftUI
 
 @main
 struct watchCookApp: App {
-    @StateObject private var dataController = DataController()
-    
+    @StateObject var dataController = DataController.shared // StateObject 로 감싸주면 preview 에서 실행되는 것을 막을 수 있음
     var body: some Scene {
         WindowGroup {
             ContentView()

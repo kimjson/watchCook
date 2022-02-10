@@ -26,8 +26,8 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            ContentView()
-        }
+        ContentView()
+            .previewDevice("Apple Watch Series 5 - 40mm") // 왠지 모르겠는데 inherted device, apple watch series 6 로 하면 안됨 ㅡㅡ;;
+            .environment(\.managedObjectContext, DataController.preview.container.viewContext)
     }
 }
