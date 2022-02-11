@@ -19,7 +19,7 @@ class DataController: ObservableObject {
         
         do {
             for i in 0 ..< 10 {
-                let newRecipe: Recipe = Recipe.randomInstance(context: viewContext)
+                _ = Recipe.randomInstance(context: viewContext)
             }
             try viewContext.save()
         } catch {
@@ -61,6 +61,24 @@ class DataController: ObservableObject {
                 */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
+            
+            // Only initialize the schema when building the app with the
+            // Debug build configuration.
+            // watchOS 에서 스키마 초기화 시도하면 앱 크래시.
+            #if os(iOS)
+                #if DEBUG
+                do {
+                    // Use the container to initialize the development schema.
+                    if !self.inMemory {
+                        try (container as! NSPersistentCloudKitContainer).initializeCloudKitSchema(options: [])
+                    }
+                } catch {
+                    // Handle any errors.
+                    let nsError = error as NSError
+                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                }
+                #endif
+            #endif
         })
         
         try? container.viewContext.setQueryGenerationFrom(.current)

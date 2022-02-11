@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F07EB8B27B5D3B300F5AEB5 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F07EB8A27B5D3B300F5AEB5 /* CloudKit.framework */; };
 		3F15014227B3290F00946F50 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F15014127B3290F00946F50 /* CloudKit.framework */; };
 		3F2138F527B234D600CF7B48 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2138F427B234D600CF7B48 /* DataController.swift */; };
 		3F9B1D9F27B3549400B898EF /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2138F427B234D600CF7B48 /* DataController.swift */; };
@@ -80,6 +81,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3F07EB8927B5D3A900F5AEB5 /* watchCook WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "watchCook WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		3F07EB8A27B5D3B300F5AEB5 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.3.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		3F15013F27B3290200946F50 /* watchCook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = watchCook.entitlements; sourceTree = "<group>"; };
 		3F15014127B3290F00946F50 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.2.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		3F15014327B3299C00946F50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -120,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F07EB8B27B5D3B300F5AEB5 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +133,7 @@
 		3F15014027B3290F00946F50 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3F07EB8A27B5D3B300F5AEB5 /* CloudKit.framework */,
 				3F15014127B3290F00946F50 /* CloudKit.framework */,
 			);
 			name = Frameworks;
@@ -189,6 +194,7 @@
 		3F9EC89127A68DB400281943 /* watchCook WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				3F07EB8927B5D3A900F5AEB5 /* watchCook WatchKit Extension.entitlements */,
 				3F9EC89227A68DB400281943 /* ContentView.swift */,
 				3FF7BC6A27ABBAD500F8E8B7 /* RecipeDetail.swift */,
 				3F9EC89627A68DB400281943 /* ComplicationController.swift */,
@@ -328,8 +334,8 @@
 			projectRoot = "";
 			targets = (
 				3F9EC87327A68DB200281943 /* watchCook */,
-				3F9EC88127A68DB300281943 /* watchCook WatchKit App */,
 				3F9EC88C27A68DB400281943 /* watchCook WatchKit Extension */,
+				3F9EC88127A68DB300281943 /* watchCook WatchKit App */,
 			);
 		};
 /* End PBXProject section */
@@ -529,6 +535,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "watchCook WatchKit Extension/watchCook WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchCook WatchKit Extension/Preview Content\"";
@@ -537,7 +544,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "watchCook WatchKit Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "watchCook WatchKit Extension";
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "$(PRODUCT_MODULE_NAME).ComplicationController";
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = watchCook_WatchKit_Extension.ComplicationController;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -561,6 +568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "watchCook WatchKit Extension/watchCook WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"watchCook WatchKit Extension/Preview Content\"";
@@ -569,7 +577,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "watchCook WatchKit Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "watchCook WatchKit Extension";
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "$(PRODUCT_MODULE_NAME).ComplicationController";
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = watchCook_WatchKit_Extension.ComplicationController;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (

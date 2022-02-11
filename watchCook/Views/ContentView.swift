@@ -28,10 +28,7 @@ struct ContentView: View {
             .toolbar {
 //                NavigationLink("레시피 추가", destination: RecipeDetail(recipe: Recipe()))
                 Button("레시피 추가") {
-                    let titles = ["7분김치찌개", "홍합양송이파스타", "들기름막국수", "들깨칼국수"]
-                    let recipe = Recipe(context: moc)
-                    recipe.title = titles.randomElement()!
-                    
+                    _ = Recipe.randomInstance(context: moc)
                     try? moc.save()
                 }
             }

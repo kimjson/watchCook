@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct RecipeDetail: View {
+    @Environment(\.presentationMode) var presentation
+    
     @State private var index: Int = -1
     @State private var text: String = "준비되셨나요"
     @State private var currentStep: Step? = nil
@@ -23,8 +25,14 @@ struct RecipeDetail: View {
     }
     
     func nextStep() {
-        index += 1
-        currentStep = recipe.stepArray[index]
+        if isEnd() {
+            // exit to recipe list
+        } else {
+            index += 1
+            if !isEnd() {
+                currentStep = recipe.stepArray[index]
+            }
+        }
     }
     
     func prevStep() {
@@ -57,26 +65,33 @@ struct RecipeDetail: View {
     }
     
     var body: some View {
-        VStack {
-            Spacer()
-            Text(getText())
-                .navigationTitle(recipe.safeTitle)
-            Spacer()
+        GeometryReader { geometry in
+            ScrollView {
+                VStack {
+                    Spacer()
+                    
+                    Text(getText())
+                        .navigationTitle(recipe.safeTitle)
+                    
+                    Spacer()
 
-            HStack{
-                if (!isStart()) {
-                    Button(action: {
-                        prevStep()
-                    }) {
-                        Text(getSecondaryButtonText())
+                    HStack{
+                        if !isStart() {
+                            Button(getSecondaryButtonText(), action: {
+                                prevStep()
+                            })
+                        }
+                        
+                        Button(getPrimaryButtonText(), action: {
+                            if !isEnd() {
+                                nextStep()
+                            } else {
+                                presentation.wrappedValue.dismiss()
+                            }
+                        })
                     }
                 }
-                
-                Button(action: {
-                    nextStep()
-                }) {
-                    Text(getPrimaryButtonText())
-                }
+                .frame(minHeight: geometry.size.height)
             }
         }
     }
