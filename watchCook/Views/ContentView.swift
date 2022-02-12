@@ -28,29 +28,13 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List(recipes) { recipe in
-                Button(recipe.safeTitle) {
-                    selectRecipe(recipe: recipe)
+                NavigationLink(recipe.safeTitle) {
+                    RecipeDetail(recipe: recipe)
                 }
             }
             .navigationTitle("레시피 목록")
             .toolbar {
                 NavigationLink("레시피 추가", destination: RecipeDetail(recipe: Recipe()))
-            }
-            .fullScreenCover(item: $selectedRecipe, onDismiss: unselectRecipe) { item in
-                Spacer()
-                HStack {
-                    Button("닫기") {
-                        unselectRecipe()
-                    }
-                    Spacer()
-                    Button("저장") {
-                        unselectRecipe()
-                    }
-                }
-                .padding([.leading, .trailing], 16)
-                // steps only (title is not used)
-                Spacer()
-                RecipeDetail(recipe: item)
             }
         }
     }

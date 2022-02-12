@@ -24,7 +24,6 @@ struct RecipeTitle: View {
     var body: some View {
         TextField("레시피의 이름", text: $formData.title)
             .font(.title)
-            .padding(.bottom, 8)
     }
 }
 
@@ -65,6 +64,8 @@ struct RecipeDetail: View {
             }
             
         }
+        .navigationTitle("레시피 상세")
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: initFormData)
     }
 }
