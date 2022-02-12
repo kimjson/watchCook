@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class StepInput: ObservableObject, Identifiable {
+class StepInput: ObservableObject {
     var id: Int32 = 1
     @Published var text: String = ""
 }
@@ -38,11 +38,24 @@ struct RecipeDetail: View {
         formData.title = recipe.safeTitle
         formData.steps = recipe.stepArray.map {
             let step = StepInput()
-            step.id = $0.order
             step.text = $0.safeText
             return step
         }
-        print(formData.steps)
+    }
+    
+    var isDirty: Bool {
+        if formData.title != recipe.title {
+            return true
+        } else if formData.steps.count != recipe.stepArray.count {
+            return true
+        } else {
+            for i in 0..<formData.steps.count {
+                if formData.steps[i].text != recipe.stepArray[i].text {
+                    return true
+                }
+            }
+            return false
+        }
     }
 
     var body: some View {
@@ -58,7 +71,6 @@ struct RecipeDetail: View {
             }
             Button("단계 추가") {
                 let step = StepInput()
-                step.id = (formData.steps.last?.id ?? 0) + 1
                 step.text = ""
                 formData.steps = formData.steps + [step]
             }
@@ -66,6 +78,19 @@ struct RecipeDetail: View {
         }
         .navigationTitle("레시피 상세")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Button("저장") {
+                // save recipe to cloudkit
+                if isDirty {
+                    // update recipe with formData
+                    recipe.title = formData.title
+                    
+                    // how to update steps?
+                    
+                    try? moc.save()
+                }
+            }
+        }
         .onAppear(perform: initFormData)
     }
 }
