@@ -70,26 +70,33 @@ struct RecipeDetail: View {
                 )
             }
             Button("단계 추가") {
-                let step = StepInput()
+                let step = Step(context: moc)
                 step.text = ""
-                formData.steps = formData.steps + [step]
+                step.order = recipe.lastStepOrder + 1
+                recipe.addToSteps(step)
+                
+                let stepInput = StepInput()
+                stepInput.text = ""
+                formData.steps = formData.steps + [stepInput]
             }
-            
         }
         .navigationTitle("레시피 상세")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Button("저장") {
-                // save recipe to cloudkit
                 if isDirty {
-                    // update recipe with formData
+                    precondition(formData.steps.count == recipe.stepArray.count, "양식 데이터와 레시피 데이터가 동기화되어야 합니다")
+
                     recipe.title = formData.title
                     
-                    // how to update steps?
+                    for i in 0..<recipe.stepArray.count {
+                        recipe.stepArray[i].text = formData.steps[i].text
+                    }
                     
                     try? moc.save()
                 }
             }
+            .disabled(!isDirty)
         }
         .onAppear(perform: initFormData)
     }
