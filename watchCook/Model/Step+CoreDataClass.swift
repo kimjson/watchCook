@@ -19,4 +19,8 @@ public class Step: NSManagedObject {
         
         return step
     }
+    
+    public var safeText: String {
+        return text ?? ""
+    }
 }
