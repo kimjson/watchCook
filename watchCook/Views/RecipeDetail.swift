@@ -8,7 +8,6 @@
 import SwiftUI
 
 class StepInput: ObservableObject {
-    var id: Int32 = 1
     @Published var text: String = ""
 }
 
@@ -99,6 +98,14 @@ struct RecipeDetail: View {
             .disabled(!isDirty)
         }
         .onAppear(perform: initFormData)
+    }
+}
+
+struct RecipeCreate: View {
+    @Environment(\.managedObjectContext) var moc
+    
+    var body: some View {
+        RecipeDetail(recipe: Recipe(context: moc))
     }
 }
 
