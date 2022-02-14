@@ -17,12 +17,19 @@ class FormData: ObservableObject {
 }
 
 struct RecipeTitle: View {
+    @Environment(\.managedObjectContext) var moc
     @ObservedObject var formData: FormData
     @ObservedObject var recipe: Recipe
     
     var body: some View {
         TextField("레시피의 이름", text: $formData.title)
             .font(.title)
+            .onSubmit {
+                if recipe.title != formData.title {
+                    recipe.title = formData.title
+                    try? moc.save()
+                }
+            }
     }
 }
 
@@ -67,6 +74,12 @@ struct RecipeDetail: View {
                     "단계를 입력하세요",
                     text: $formData.steps[i].text
                 )
+                    .onSubmit {
+                        if recipe.stepArray[i].text != formData.steps[i].text {
+                            recipe.stepArray[i].text = formData.steps[i].text
+                            try? moc.save()
+                        }
+                    }
             }
             Button("단계 추가") {
                 let step = Step(context: moc)
@@ -81,22 +94,6 @@ struct RecipeDetail: View {
         }
         .navigationTitle("레시피 상세")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            Button("저장") {
-                if isDirty {
-                    precondition(formData.steps.count == recipe.stepArray.count, "양식 데이터와 레시피 데이터가 동기화되어야 합니다")
-
-                    recipe.title = formData.title
-                    
-                    for i in 0..<recipe.stepArray.count {
-                        recipe.stepArray[i].text = formData.steps[i].text
-                    }
-                    
-                    try? moc.save()
-                }
-            }
-            .disabled(!isDirty)
-        }
         .onAppear(perform: initFormData)
     }
 }
