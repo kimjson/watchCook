@@ -18,9 +18,17 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            List(recipes) { recipe in
-                NavigationLink(recipe.safeTitle) {
-                    RecipeDetail(recipe: recipe)
+            List {
+                ForEach(recipes, id: \.self) { recipe in
+                    NavigationLink(recipe.safeTitle) {
+                        RecipeDetail(recipe: recipe)
+                    }
+                }
+                .onDelete { indexSet in
+                    for index in indexSet {
+                        moc.delete(recipes[index])
+                    }
+                    try? moc.save()
                 }
             }
             .navigationTitle("레시피 목록")
