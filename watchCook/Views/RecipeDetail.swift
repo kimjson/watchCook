@@ -98,6 +98,8 @@ struct RecipeDetail: View {
                 let stepInput = StepInput()
                 stepInput.text = ""
                 formData.steps = formData.steps + [stepInput]
+                
+                focusedIndex = formData.steps.count - 1
             }
         }
         .navigationTitle("레시피 상세")
