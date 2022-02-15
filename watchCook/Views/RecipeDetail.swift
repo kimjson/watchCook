@@ -21,15 +21,19 @@ struct RecipeTitle: View {
     @ObservedObject var formData: FormData
     @ObservedObject var recipe: Recipe
     
+    @FocusState private var titleFieldIsFocused: Bool
+    
     var body: some View {
         TextField("레시피의 이름", text: $formData.title)
             .font(.title)
-            .onSubmit {
-                if recipe.title != formData.title {
+            .focused($titleFieldIsFocused)
+            .onChange(of: titleFieldIsFocused) { titleFieldIsFocused in
+                if !titleFieldIsFocused && recipe.title != formData.title {
                     recipe.title = formData.title
                     try? moc.save()
                 }
             }
+            .disableAutocorrection(true)
     }
 }
 
@@ -39,6 +43,8 @@ struct RecipeDetail: View {
     @ObservedObject var recipe: Recipe
     
     @StateObject private var formData: FormData = FormData()
+    
+    @FocusState private var focusedIndex: Int?
     
     func initFormData() {
         formData.title = recipe.safeTitle
@@ -74,12 +80,14 @@ struct RecipeDetail: View {
                     "단계를 입력하세요",
                     text: $formData.steps[i].text
                 )
-                    .onSubmit {
+                    .focused($focusedIndex, equals: i)
+                    .onChange(of: focusedIndex) { focusedIndex in
                         if recipe.stepArray[i].text != formData.steps[i].text {
                             recipe.stepArray[i].text = formData.steps[i].text
                             try? moc.save()
                         }
                     }
+                    .disableAutocorrection(true)
             }
             Button("단계 추가") {
                 let step = Step(context: moc)
