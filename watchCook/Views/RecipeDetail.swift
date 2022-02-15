@@ -16,6 +16,27 @@ class FormData: ObservableObject {
     @Published var steps: [StepInput] = []
 }
 
+struct TextFieldClearButton: ViewModifier {
+    @Binding var text: String
+    
+    func body(content: Content) -> some View {
+        HStack {
+            content
+            
+            if !text.isEmpty {
+                Button(
+                    action: { self.text = "" },
+                    label: {
+                        Image(systemName: "multiply.circle.fill")
+                            .foregroundColor(Color(UIColor.opaqueSeparator))
+                    }
+                )
+                    .padding(.trailing, 16)
+            }
+        }
+    }
+}
+
 struct RecipeTitle: View {
     @Environment(\.managedObjectContext) var moc
     @ObservedObject var formData: FormData
@@ -25,7 +46,7 @@ struct RecipeTitle: View {
     
     var body: some View {
         TextField("레시피의 이름", text: $formData.title)
-            .font(.title)
+            .font(Font.title.bold())
             .focused($titleFieldIsFocused)
             .onChange(of: titleFieldIsFocused) { titleFieldIsFocused in
                 if !titleFieldIsFocused && recipe.title != formData.title {
@@ -34,6 +55,7 @@ struct RecipeTitle: View {
                 }
             }
             .disableAutocorrection(true)
+            .modifier(TextFieldClearButton(text: $formData.title))
     }
 }
 
@@ -89,7 +111,7 @@ struct RecipeDetail: View {
                     }
                     .disableAutocorrection(true)
             }
-            Button("단계 추가") {
+            Button(action: {
                 let step = Step(context: moc)
                 step.text = ""
                 step.order = recipe.lastStepOrder + 1
@@ -100,19 +122,11 @@ struct RecipeDetail: View {
                 formData.steps = formData.steps + [stepInput]
                 
                 focusedIndex = formData.steps.count - 1
-            }
+            }, label: {Text("단계 추가").bold()})
         }
         .navigationTitle("레시피 상세")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: initFormData)
-    }
-}
-
-struct RecipeCreate: View {
-    @Environment(\.managedObjectContext) var moc
-    
-    var body: some View {
-        RecipeDetail(recipe: Recipe(context: moc))
     }
 }
 
