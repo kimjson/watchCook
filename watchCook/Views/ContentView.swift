@@ -16,6 +16,10 @@ struct ContentView: View {
     @FetchRequest(sortDescriptors: []) var recipes: FetchedResults<Recipe>
     @State private var newRecipe: Recipe?
     
+    func closeSheet() {
+        newRecipe = nil
+    }
+    
     var body: some View {
         NavigationView {
             List {
@@ -37,22 +41,23 @@ struct ContentView: View {
                     newRecipe = Recipe(context: moc)
                 }
             }
-            .sheet(item: $newRecipe, onDismiss: {newRecipe = nil}) { item in
-                HStack {
-                    Button("취소") {
-                        if let deleteTarget = newRecipe {
-                            moc.delete(deleteTarget)
+            .sheet(item: $newRecipe) { item in
+                VStack {
+                    HStack {
+                        Button("취소") {
+                            if let deleteTarget = newRecipe {
+                                moc.delete(deleteTarget)
+                            }
+                            
+                            closeSheet()
                         }
-                        
-                        newRecipe = nil
+                        Spacer()
+                        Button("저장", action: closeSheet)
                     }
-                    Spacer()
-                    Button("저장") {
-                        newRecipe = nil
-                    }
+                    .padding([.top, .leading, .trailing], 16)
+                    RecipeDetail(recipe: item)
                 }
-                .padding([.top, .leading, .trailing], 16)
-                RecipeDetail(recipe: item)
+                .interactiveDismissDisabled()
             }
         }
     }
