@@ -8,18 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
-    @FetchRequest(sortDescriptors: []) var recipes: FetchedResults<Recipe>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.title)]) var recipes: FetchedResults<Recipe>
+    
+    @State private var searchText = ""
+    
+    var searchResults: [Recipe] {
+        if searchText.isEmpty {
+            return recipes.map {$0}
+        } else {
+            return recipes.filter {
+                $0.isSafeTitleMatches(searchText: searchText)
+            }
+        }
+    }
     
     var body: some View {
         NavigationView {
-            List(recipes) { recipe in
-                NavigationLink {
-                    RecipeDetail(recipe: recipe)
-                } label: {
-                    RecipeRow(text: recipe.title ?? "이름 없는 레시피")
+            List {
+                ForEach(searchResults, id: \.self) { recipe in
+                    NavigationLink(recipe.safeTitle) {
+                        RecipeDetail(recipe: recipe)
+                    }
                 }
             }
             .navigationTitle("레시피 목록")
+            .searchable(text: $searchText, prompt: "제목으로 검색")
         }
     }
 }

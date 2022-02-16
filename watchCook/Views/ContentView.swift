@@ -13,17 +13,28 @@ func noop() {
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var recipes: FetchedResults<Recipe>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.title)]) var recipes: FetchedResults<Recipe>
     @State private var newRecipe: Recipe?
+    @State private var searchText = ""
     
     func closeSheet() {
         newRecipe = nil
     }
     
+    var searchResults: [Recipe] {
+        if searchText.isEmpty {
+            return recipes.map {$0}
+        } else {
+            return recipes.filter {
+                $0.isSafeTitleMatches(searchText: searchText)
+            }
+        }
+    }
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(recipes, id: \.self) { recipe in
+                ForEach(searchResults, id: \.self) { recipe in
                     NavigationLink(recipe.safeTitle) {
                         RecipeDetail(recipe: recipe)
                     }
@@ -36,6 +47,8 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("레시피 목록")
+            .searchable(text: $searchText, prompt: "제목으로 검색")
+            .disableAutocorrection(true)
             .toolbar {
                 Button("레시피 추가") {
                     newRecipe = Recipe(context: moc)

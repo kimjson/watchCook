@@ -35,6 +35,13 @@ public class Recipe: NSManagedObject {
         return title ?? "이름 없는 레시피"
     }
     
+    func isSafeTitleMatches(searchText: String) -> Bool {
+        let safeTitleWithoutSpaces = safeTitle.replacingOccurrences(of: " ", with: "")
+        let searchTextWithoutSpaces = searchText.replacingOccurrences(of: " ", with: "")
+        
+        return safeTitleWithoutSpaces.contains(searchTextWithoutSpaces)
+    }
+    
     public static func randomInstance(context: NSManagedObjectContext? = nil) -> Recipe {
         let titles = ["7분김치찌개", "홍합양송이파스타", "들기름막국수", "들깨칼국수"]
         let recipe = context != nil ? Recipe(context: context!) : Recipe()
