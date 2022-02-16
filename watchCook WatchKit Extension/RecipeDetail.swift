@@ -89,6 +89,7 @@ struct RecipeDetail: View {
                                 presentation.wrappedValue.dismiss()
                             }
                         })
+                            .buttonStyle(.borderedProminent)
                     }
                 }
                 .frame(minHeight: geometry.size.height)
