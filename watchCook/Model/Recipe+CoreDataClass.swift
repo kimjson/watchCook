@@ -19,6 +19,14 @@ public class Recipe: NSManagedObject {
         }
     }
     
+    public func getStepAt(index: Int) -> Step? {
+        if stepArray.indices.contains(index) {
+            return stepArray[index]
+        } else {
+            return nil
+        }
+    }
+    
     public var lastStep: Step? {
         let stepArray = self.stepArray
         if !stepArray.isEmpty {

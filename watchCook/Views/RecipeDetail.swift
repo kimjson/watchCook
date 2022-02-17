@@ -124,10 +124,11 @@ struct RecipeDetail: View {
                     )
                         .focused($focusedIndex, equals: i)
                         .onChange(of: focusedIndex) { focusedIndex in
-                            print("inside on change: \(recipe.stepArray.count)")
-                            if recipe.stepArray[i].text != formData.steps[i].text {
-                                recipe.stepArray[i].text = formData.steps[i].text
-                                try? moc.save()
+                            if let targetStep = recipe.getStepAt(index: i) {
+                                if targetStep.text != formData.steps[i].text {
+                                    recipe.stepArray[i].text = formData.steps[i].text
+                                    try? moc.save()
+                                }
                             }
                         }
                         .disableAutocorrection(true)
@@ -147,8 +148,6 @@ struct RecipeDetail: View {
                 step.text = ""
                 step.order = recipe.lastStepOrder + 1
                 recipe.addToSteps(step)
-                
-                print("after add step click: \(recipe.stepArray.count)")
                 
                 let stepInput = StepInput()
                 stepInput.text = ""
