@@ -43,11 +43,11 @@ public class Recipe: NSManagedObject {
     }
     
     public static func randomInstance(context: NSManagedObjectContext? = nil) -> Recipe {
-        let titles = ["7분김치찌개", "홍합양송이파스타", "들기름막국수", "들깨칼국수"]
+        let titles = ["7분 김치찌개", "홍합 양송이 파스타", "들기름 막국수", "들깨 칼국수", "순두부 들깨탕", "만두 그라탕", "어묵 볶음", "버섯 볶음죽", "계란찜 불닭볶음면"]
         let recipe = context != nil ? Recipe(context: context!) : Recipe()
         recipe.title = titles.randomElement()!
         
-        let steps: [Step] = (1...3).map {
+        let steps: [Step] = (1...4).map {
             let step = Step.randomInstance(context: context)
             step.order = Int32($0)
             return step
