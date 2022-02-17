@@ -133,10 +133,11 @@ struct RecipeDetail: View {
                         .disableAutocorrection(true)
                         .frame(minHeight: 40)
                     HStack {
-                        Spacer()
                         Button(stepTimerText(step: formData.steps[i])) {
                             
                         }
+                        .padding(.leading, 5)
+                        Spacer()
                     }
                     
                 }
