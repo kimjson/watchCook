@@ -9,6 +9,7 @@ import SwiftUI
 
 class StepInput: ObservableObject {
     @Published var text: String = ""
+    @Published var seconds: Int32 = 0
 }
 
 class FormData: ObservableObject {
@@ -73,6 +74,7 @@ struct RecipeDetail: View {
         formData.steps = recipe.stepArray.map {
             let step = StepInput()
             step.text = $0.safeText
+            step.seconds = $0.seconds
             return step
         }
     }
@@ -91,6 +93,24 @@ struct RecipeDetail: View {
             return false
         }
     }
+    
+    func zeroPad(number: Int32) -> String {
+        if number == 0 {
+            return "00"
+        } else {
+            return "\(number)"
+        }
+    }
+    
+    func stepTimerText(step: StepInput) -> String {
+        if step.seconds > 0 {
+            let minutes: Int32 = step.seconds / 60
+            let seconds: Int32 = step.seconds % 60
+            return "\(zeroPad(number: minutes)):\(zeroPad(number: seconds))"
+        } else {
+            return "타이머 추가"
+        }
+    }
 
     var body: some View {
         RecipeTitle(formData: formData, recipe: recipe)
@@ -98,17 +118,26 @@ struct RecipeDetail: View {
         
         List {
             ForEach(0..<formData.steps.count, id: \.self) { i in
-                TextEditor(
-                    text: $formData.steps[i].text
-                )
-                    .focused($focusedIndex, equals: i)
-                    .onChange(of: focusedIndex) { focusedIndex in
-                        if recipe.stepArray[i].text != formData.steps[i].text {
-                            recipe.stepArray[i].text = formData.steps[i].text
-                            try? moc.save()
+                VStack {
+                    TextEditor(
+                        text: $formData.steps[i].text
+                    )
+                        .focused($focusedIndex, equals: i)
+                        .onChange(of: focusedIndex) { focusedIndex in
+                            if recipe.stepArray[i].text != formData.steps[i].text {
+                                recipe.stepArray[i].text = formData.steps[i].text
+                                try? moc.save()
+                            }
+                        }
+                        .disableAutocorrection(true)
+                    HStack {
+                        Spacer()
+                        Button(stepTimerText(step: formData.steps[i])) {
+                            
                         }
                     }
-                    .disableAutocorrection(true)
+                    
+                }
             }
             Button(action: {
                 let step = Step(context: moc)
