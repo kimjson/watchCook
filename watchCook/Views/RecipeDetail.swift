@@ -98,8 +98,7 @@ struct RecipeDetail: View {
         
         List {
             ForEach(0..<formData.steps.count, id: \.self) { i in
-                TextField(
-                    "단계를 입력하세요",
+                TextEditor(
                     text: $formData.steps[i].text
                 )
                     .focused($focusedIndex, equals: i)
