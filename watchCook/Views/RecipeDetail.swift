@@ -69,6 +69,9 @@ struct RecipeDetail: View {
     
     @FocusState private var focusedIndex: Int?
     
+    @State private var editedStep: Step?
+    @State private var timeValue: TimeValue = TimeValue(min: 0, sec: 0)
+    
     func initFormData() {
         formData.title = recipe.safeTitle
         formData.steps = recipe.stepArray.map {
@@ -111,6 +114,11 @@ struct RecipeDetail: View {
             return "타이머 추가"
         }
     }
+    
+    func closeSheet() {
+        editedStep = nil
+        timeValue = TimeValue(min: 0, sec: 0)
+    }
 
     var body: some View {
         RecipeTitle(formData: formData, recipe: recipe)
@@ -135,7 +143,11 @@ struct RecipeDetail: View {
                         .frame(minHeight: 40)
                     HStack {
                         Button(stepTimerText(step: formData.steps[i])) {
-                            
+                            editedStep = recipe.getStepAt(index: i)
+                            let seconds = editedStep?.seconds ?? 0
+                            let min = Int(seconds / 60)
+                            let sec = Int(seconds % 60)
+                            timeValue = TimeValue(min: min, sec: sec)
                         }
                         .padding(.leading, 5)
                         Spacer()
@@ -159,6 +171,20 @@ struct RecipeDetail: View {
         .navigationTitle("레시피 상세")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: initFormData)
+        .sheet(item: $editedStep) { item in
+            NavigationView {
+                VStack {
+                    Text(item.safeText)
+                    Spacer()
+                    TimePickerView(selection: $timeValue)
+                }
+                .navigationTitle("타이머 수정")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    Button("저장", action: closeSheet)
+                }
+            }
+        }
     }
 }
 
