@@ -25,6 +25,9 @@ struct TimePickerView: UIViewRepresentable {
 
         picker.dataSource = context.coordinator
         picker.delegate = context.coordinator
+        
+        picker.selectRow(selection.wrappedValue.min, inComponent: 0, animated: false)
+        picker.selectRow(selection.wrappedValue.sec, inComponent: 1, animated: false)
 
         return picker
     }
