@@ -54,7 +54,7 @@ struct ContentView: View {
                     newRecipe = Recipe(context: moc)
                 }
             }
-            .sheet(item: $newRecipe) { item in
+            .fullScreenCover(item: $newRecipe) { item in
                 VStack {
                     HStack {
                         Button("취소") {
@@ -70,7 +70,6 @@ struct ContentView: View {
                     .padding([.top, .leading, .trailing], 16)
                     RecipeDetail(recipe: item)
                 }
-                .interactiveDismissDisabled()
             }
         }
     }
