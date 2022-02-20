@@ -23,6 +23,7 @@ struct TimePickerView: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<TimePickerView>) -> UIPickerView {
         let picker = UIPickerView(frame: .zero)
 
+        picker.translatesAutoresizingMaskIntoConstraints = false
         picker.dataSource = context.coordinator
         picker.delegate = context.coordinator
         
@@ -78,6 +79,16 @@ struct TimeValue {
     
     public var seconds: Int32 {
         return Int32(min * 60 + sec)
+    }
+    
+    init(seconds: Int32) {
+        min = Int(seconds / 60)
+        sec = Int(seconds % 60)
+    }
+    
+    init(min: Int, sec: Int) {
+        self.min = min
+        self.sec = sec
     }
 }
 

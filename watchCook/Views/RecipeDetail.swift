@@ -9,7 +9,6 @@ import SwiftUI
 
 class StepInput: ObservableObject {
     @Published var text: String = ""
-    @Published var seconds: Int32 = 0
 }
 
 class FormData: ObservableObject {
@@ -77,7 +76,6 @@ struct RecipeDetail: View {
         formData.steps = recipe.stepArray.map {
             let step = StepInput()
             step.text = $0.safeText
-            step.seconds = $0.seconds
             return step
         }
     }
@@ -97,7 +95,7 @@ struct RecipeDetail: View {
         }
     }
     
-    func zeroPad(number: Int32) -> String {
+    func zeroPad(number: Int) -> String {
         if number == 0 {
             return "00"
         } else {
@@ -105,17 +103,30 @@ struct RecipeDetail: View {
         }
     }
     
-    func stepTimerText(step: StepInput) -> String {
+    func stepTimerText(step: Step) -> String {
         if step.seconds > 0 {
-            let minutes: Int32 = step.seconds / 60
-            let seconds: Int32 = step.seconds % 60
-            return "\(zeroPad(number: minutes)):\(zeroPad(number: seconds))"
+            let tv = TimeValue(seconds: step.seconds)
+            var text = "타이머"
+            if tv.sec > 0 {
+                text = "\(tv.sec)초 \(text)"
+            }
+            if tv.min > 0 {
+                text = "\(tv.min)분 \(text)"
+            }
+            return text
         } else {
             return "타이머 추가"
         }
     }
     
     func closeSheet() {
+        if let targetStep = editedStep {
+            if targetStep.seconds != timeValue.seconds {
+                targetStep.seconds = timeValue.seconds
+                try? moc.save()
+            }
+        }
+
         editedStep = nil
         timeValue = TimeValue(min: 0, sec: 0)
     }
@@ -142,12 +153,9 @@ struct RecipeDetail: View {
                         .disableAutocorrection(true)
                         .frame(minHeight: 40)
                     HStack {
-                        Button(stepTimerText(step: formData.steps[i])) {
+                        Button(stepTimerText(step: recipe.getStepAt(index: i)!)) {
                             editedStep = recipe.getStepAt(index: i)
-                            let seconds = editedStep?.seconds ?? 0
-                            let min = Int(seconds / 60)
-                            let sec = Int(seconds % 60)
-                            timeValue = TimeValue(min: min, sec: sec)
+                            timeValue = TimeValue(seconds: editedStep?.seconds ?? 0)
                         }
                         .padding(.leading, 5)
                         Spacer()
@@ -166,7 +174,14 @@ struct RecipeDetail: View {
                 formData.steps = formData.steps + [stepInput]
                 
                 focusedIndex = formData.steps.count - 1
-            }, label: {Text("단계 추가").bold()})
+            }, label: {
+                HStack {
+                    Image(systemName: "plus.circle")
+                    Text("단계 추가")
+                }.font(.headline).foregroundColor(Color.white)
+            })
+                .padding(.leading, 4)
+                .listRowBackground(Color.blue)
         }
         .navigationTitle("레시피 상세")
         .navigationBarTitleDisplayMode(.inline)
@@ -174,8 +189,7 @@ struct RecipeDetail: View {
         .sheet(item: $editedStep) { item in
             NavigationView {
                 VStack {
-                    Text(item.safeText)
-                    Spacer()
+                    Text(item.safeText).font(.title3).padding([.leading, .trailing], 32)
                     TimePickerView(selection: $timeValue)
                 }
                 .navigationTitle("타이머 수정")
