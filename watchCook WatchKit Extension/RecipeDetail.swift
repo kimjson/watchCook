@@ -115,7 +115,13 @@ struct RecipeDetail: View {
                     
                     // 남은 시간이 아니라 타이머 자체가 단계에 존재하는지 여부로 렌더해야 할 거 같다.
                     if timerRemaining > 0 {
-                        Button(timerText, action: startTimer)
+                        Button(action: startTimer, label: {
+                            HStack {
+                                Text(timerText)
+                                Image(systemName: "chevron.right")
+                            }
+                            
+                        })
                             .buttonStyle(.plain)
                         Spacer()
                     }
