@@ -11,7 +11,6 @@ struct RecipeDetail: View {
     @Environment(\.presentationMode) var presentation
     
     @State private var index: Int = -1
-    @State private var currentStep: Step? = nil
     @State private var timerStartedAt: Date? = nil
     @State private var timerRemaining: Int32 = 0
 
@@ -19,38 +18,40 @@ struct RecipeDetail: View {
     
     // MARK: 계산되는 속성
     
+    var isStart: Bool {
+        return index == -1
+    }
+    
+    var isEnd: Bool {
+        return index == recipe.stepArray.count
+    }
+    
+    var currentStep: Step {
+        return recipe.getStepAt(index: index) ?? Step()
+    }
+    
     var timerText: String {
         return TimeValue(seconds: timerRemaining).humanized
     }
     
     var text: String {
-        if (isStart()) {
+        if isStart {
             return "준비되셨나요?"
-        } else if (isEnd()) {
+        } else if isEnd {
             return "수고하셨어요. 맛있게 드세요!"
         } else {
-            return currentStep?.text ?? ""
+            return currentStep.text ?? ""
         }
     }
     
     var primaryButtonText: String {
-        if isStart() {
+        if isStart {
             return "시작하기"
-        } else if isEnd() {
+        } else if isEnd {
             return "끝내기"
         } else {
             return "다음"
         }
-    }
-    
-    // MARK: 계산되는 속성으로 "아직" 변환하지 못한 게터 함수
-    
-    func isStart() -> Bool {
-        return index == -1
-    }
-    
-    func isEnd() -> Bool {
-        return index == recipe.stepArray.count
     }
     
     // MARK: 사용자의 액션 혹은 이벤트 처리
@@ -58,33 +59,9 @@ struct RecipeDetail: View {
     func updateTimerRemaining() {
         if let startedAt = timerStartedAt {
             let elapsedSeconds = Int32(Date().timeIntervalSince(startedAt))
-            timerRemaining = max((currentStep?.seconds ?? 0) - elapsedSeconds, 0)
+            timerRemaining = max(currentStep.seconds - elapsedSeconds, 0)
         } else {
-            timerRemaining = currentStep?.seconds ?? 0
-        }
-    }
-    
-    func nextStep() {
-        if !isEnd() {
-            index += 1
-            if isEnd() {
-                currentStep = nil
-            } else {
-                currentStep = recipe.stepArray[index]
-                updateTimerRemaining()
-            }
-        }
-    }
-    
-    func prevStep() {
-        if !isStart() {
-            index -= 1
-            if isStart() {
-                currentStep = nil
-            } else {
-                currentStep = recipe.stepArray[index]
-                updateTimerRemaining()
-            }
+            timerRemaining = currentStep.seconds
         }
     }
     
@@ -99,6 +76,26 @@ struct RecipeDetail: View {
                 
                 updateTimerRemaining()
             }
+        }
+    }
+    
+    func prevStep() {
+        if !isStart {
+            index -= 1
+            if !isStart {
+                updateTimerRemaining()
+            }
+        }
+    }
+    
+    func nextStep() {
+        if !isEnd {
+            index += 1
+            if !isEnd {
+                updateTimerRemaining()
+            }
+        } else {
+            presentation.wrappedValue.dismiss()
         }
     }
     
@@ -123,21 +120,16 @@ struct RecipeDetail: View {
                             
                         })
                             .buttonStyle(.plain)
+
                         Spacer()
                     }
 
                     HStack{
-                        if !isStart() {
+                        if !isStart {
                             Button("이전", action: prevStep)
                         }
                         
-                        Button(primaryButtonText, action: {
-                            if !isEnd() {
-                                nextStep()
-                            } else {
-                                presentation.wrappedValue.dismiss()
-                            }
-                        })
+                        Button(primaryButtonText, action: nextStep)
                             .buttonStyle(.borderedProminent)
                     }
                 }
