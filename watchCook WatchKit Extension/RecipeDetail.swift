@@ -13,8 +13,21 @@ struct RecipeDetail: View {
     @State private var index: Int = -1
     @State private var text: String = "준비되셨나요"
     @State private var currentStep: Step? = nil
+    @State private var timerStartedAt: Date? = nil
+    @State private var timerRemaining: Int32 = 0
 
     var recipe: Recipe
+    
+    func getTimerRemaining() -> Int32 {
+        if let startedAt = timerStartedAt {
+            return max((currentStep?.seconds ?? 0) - Int32(Date().timeIntervalSince(startedAt)), 0)
+        }
+        return currentStep?.seconds ?? 0
+    }
+    
+    func getTimerText() -> String {
+        return TimeValue(seconds: timerRemaining).humanized
+    }
     
     func isStart() -> Bool {
         return index == -1
@@ -27,13 +40,25 @@ struct RecipeDetail: View {
     func nextStep() {
         if !isEnd() {
             index += 1
-            currentStep = isEnd() ? nil : recipe.stepArray[index]
+            if isEnd() {
+                currentStep = nil
+            } else {
+                currentStep = recipe.stepArray[index]
+                timerRemaining = getTimerRemaining()
+            }
         }
     }
     
     func prevStep() {
-        index -= 1
-        currentStep = isStart() ? nil : recipe.stepArray[index]
+        if !isStart() {
+            index -= 1
+            if isStart() {
+                currentStep = nil
+            } else {
+                currentStep = recipe.stepArray[index]
+                timerRemaining = getTimerRemaining()
+            }
+        }
     }
     
     func getText() -> String {
@@ -60,10 +85,6 @@ struct RecipeDetail: View {
         return "이전"
     }
     
-    func getTimerText() -> String {
-        return TimeValue(seconds: currentStep?.seconds ?? 0).humanized
-    }
-    
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
@@ -75,9 +96,19 @@ struct RecipeDetail: View {
                     
                     Spacer()
                     
-                    if currentStep?.seconds ?? 0 > 0 {
+                    if timerRemaining > 0 {
                         Button(getTimerText()) {
-                            
+                            if timerStartedAt == nil {
+                                timerStartedAt = Date()
+                                Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                                    if timerRemaining == 0 {
+                                        timerStartedAt = nil
+                                        timer.invalidate()
+                                    }
+                                    
+                                    timerRemaining = getTimerRemaining()
+                                }
+                            }
                         }
                     }
 
