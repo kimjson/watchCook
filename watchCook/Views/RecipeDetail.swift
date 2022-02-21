@@ -97,7 +97,7 @@ struct RecipeDetail: View {
     
     func stepTimerText(step: Step) -> String {
         if step.seconds > 0 {
-            return TimeValue(seconds: step.seconds).humanized
+            return "\(TimeValue(seconds: step.seconds).humanized) 타이머"
         } else {
             return "타이머 추가"
         }

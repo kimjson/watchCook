@@ -13,6 +13,7 @@ struct RecipeDetail: View {
     @State private var index: Int = -1
     @State private var timerStartedAt: Date? = nil
     @State private var timerRemaining: Int32 = 0
+    @State private var isTimerSheetOpen: Bool = false
 
     var recipe: Recipe
     
@@ -67,15 +68,16 @@ struct RecipeDetail: View {
     
     func startTimer() {
         if timerStartedAt == nil {
-            timerStartedAt = Date()
-            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-                if timerRemaining == 0 {
-                    timerStartedAt = nil
-                    timer.invalidate()
-                }
-                
-                updateTimerRemaining()
-            }
+            isTimerSheetOpen = true
+//            timerStartedAt = Date()
+//            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+//                if timerRemaining == 0 {
+//                    timerStartedAt = nil
+//                    timer.invalidate()
+//                }
+//
+//                updateTimerRemaining()
+//            }
         }
     }
     
@@ -114,7 +116,8 @@ struct RecipeDetail: View {
                     if timerRemaining > 0 {
                         Button(action: startTimer, label: {
                             HStack {
-                                Text(timerText)
+                                // 타이머를 여는 동시에 시작하도록 하는 것도 방법이다.
+                                Text("\(timerText) 타이머 열기")
                                 Image(systemName: "chevron.right")
                             }
                             
@@ -136,6 +139,19 @@ struct RecipeDetail: View {
                 .frame(minHeight: geometry.size.height)
             }
             .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $isTimerSheetOpen) {
+                NavigationView {
+                    Text(timerText)
+                        .font(.title)
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("타이머 닫기") {
+                                    isTimerSheetOpen = false
+                                }
+                            }
+                        }
+                }
+            }
         }
     }
 }
