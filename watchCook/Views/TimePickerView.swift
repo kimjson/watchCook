@@ -73,25 +73,6 @@ struct TimePickerView: UIViewRepresentable {
     }
 }
 
-struct TimeValue {
-    let min: Int
-    let sec: Int
-    
-    public var seconds: Int32 {
-        return Int32(min * 60 + sec)
-    }
-    
-    init(seconds: Int32) {
-        min = Int(seconds / 60)
-        sec = Int(seconds % 60)
-    }
-    
-    init(min: Int, sec: Int) {
-        self.min = min
-        self.sec = sec
-    }
-}
-
 struct TimePickerView_Previews: PreviewProvider {
     static var previews: some View {
         TimePickerView(selection: .constant(TimeValue(min: 3, sec: 30)))

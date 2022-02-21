@@ -22,6 +22,8 @@
 		3F9EC89927A68DB400281943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F9EC89827A68DB400281943 /* Assets.xcassets */; };
 		3F9EC89C27A68DB400281943 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F9EC89B27A68DB400281943 /* Preview Assets.xcassets */; };
 		3FA610E827B3572D005B4A7B /* watchCookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9EC87727A68DB200281943 /* watchCookApp.swift */; };
+		3FDA2BE027C32ABF00F171A2 /* TimeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDA2BDF27C32ABF00F171A2 /* TimeValue.swift */; };
+		3FDA2BE127C32ABF00F171A2 /* TimeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDA2BDF27C32ABF00F171A2 /* TimeValue.swift */; };
 		3FEC100227BF1EF600E05867 /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEC100127BF1EF600E05867 /* TimePickerView.swift */; };
 		3FF7BC6B27ABBAD500F8E8B7 /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7BC6A27ABBAD500F8E8B7 /* RecipeDetail.swift */; };
 		3FF7BC7727B09FE900F8E8B7 /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7BC7627B09FE900F8E8B7 /* RecipeDetail.swift */; };
@@ -101,6 +103,7 @@
 		3F9EC89827A68DB400281943 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F9EC89B27A68DB400281943 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3F9EC89D27A68DB400281943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3FDA2BDF27C32ABF00F171A2 /* TimeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeValue.swift; sourceTree = "<group>"; };
 		3FEC100127BF1EF600E05867 /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
 		3FF7BC6827ABB9CC00F8E8B7 /* RecipeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRow.swift; sourceTree = "<group>"; };
 		3FF7BC6A27ABBAD500F8E8B7 /* RecipeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetail.swift; sourceTree = "<group>"; };
@@ -221,6 +224,7 @@
 				3FFCC53327B22F3100672A6E /* Step+CoreDataClass.swift */,
 				3FFCC53527B22F3100672A6E /* Recipe+CoreDataClass.swift */,
 				3F2138F427B234D600CF7B48 /* DataController.swift */,
+				3FDA2BDF27C32ABF00F171A2 /* TimeValue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -380,6 +384,7 @@
 			files = (
 				3F2138F527B234D600CF7B48 /* DataController.swift in Sources */,
 				3FF7BC7727B09FE900F8E8B7 /* RecipeDetail.swift in Sources */,
+				3FDA2BE027C32ABF00F171A2 /* TimeValue.swift in Sources */,
 				3FF7BC7927B0A89B00F8E8B7 /* RecipeRow.swift in Sources */,
 				3FEC100227BF1EF600E05867 /* TimePickerView.swift in Sources */,
 				3FFCC53727B22F3100672A6E /* Step+CoreDataClass.swift in Sources */,
@@ -396,6 +401,7 @@
 			files = (
 				3FA610E827B3572D005B4A7B /* watchCookApp.swift in Sources */,
 				3F9B1D9F27B3549400B898EF /* DataController.swift in Sources */,
+				3FDA2BE127C32ABF00F171A2 /* TimeValue.swift in Sources */,
 				3FF7BC7A27B0AB9000F8E8B7 /* RecipeRow.swift in Sources */,
 				3F9EC89327A68DB400281943 /* ContentView.swift in Sources */,
 				3F9EC89727A68DB400281943 /* ComplicationController.swift in Sources */,

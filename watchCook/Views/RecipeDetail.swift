@@ -95,25 +95,9 @@ struct RecipeDetail: View {
         }
     }
     
-    func zeroPad(number: Int) -> String {
-        if number == 0 {
-            return "00"
-        } else {
-            return "\(number)"
-        }
-    }
-    
     func stepTimerText(step: Step) -> String {
         if step.seconds > 0 {
-            let tv = TimeValue(seconds: step.seconds)
-            var text = "타이머"
-            if tv.sec > 0 {
-                text = "\(tv.sec)초 \(text)"
-            }
-            if tv.min > 0 {
-                text = "\(tv.min)분 \(text)"
-            }
-            return text
+            return TimeValue(seconds: step.seconds).humanized
         } else {
             return "타이머 추가"
         }

@@ -25,13 +25,9 @@ struct RecipeDetail: View {
     }
     
     func nextStep() {
-        if isEnd() {
-            // exit to recipe list
-        } else {
+        if !isEnd() {
             index += 1
-            if !isEnd() {
-                currentStep = recipe.stepArray[index]
-            }
+            currentStep = isEnd() ? nil : recipe.stepArray[index]
         }
     }
     
@@ -44,7 +40,7 @@ struct RecipeDetail: View {
         if (isStart()) {
             return "준비되셨나요?"
         } else if (isEnd()) {
-            return "요리 끝!"
+            return "수고하셨어요. 맛있게 드세요!"
         } else {
             return currentStep?.text ?? ""
         }
@@ -54,7 +50,7 @@ struct RecipeDetail: View {
         if (isStart()) {
             return "시작하기"
         } else if (isEnd()) {
-            return "맛있게 먹기"
+            return "끝내기"
         } else {
             return "다음"
         }
@@ -62,6 +58,10 @@ struct RecipeDetail: View {
     
     func getSecondaryButtonText() -> String {
         return "이전"
+    }
+    
+    func getTimerText() -> String {
+        return TimeValue(seconds: currentStep?.seconds ?? 0).humanized
     }
     
     var body: some View {
@@ -74,6 +74,12 @@ struct RecipeDetail: View {
                         .navigationTitle(recipe.safeTitle)
                     
                     Spacer()
+                    
+                    if currentStep?.seconds ?? 0 > 0 {
+                        Button(getTimerText()) {
+                            
+                        }
+                    }
 
                     HStack{
                         if !isStart() {
@@ -94,6 +100,7 @@ struct RecipeDetail: View {
                 }
                 .frame(minHeight: geometry.size.height)
             }
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
