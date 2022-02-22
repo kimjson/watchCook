@@ -12,7 +12,7 @@ import UIKit
 struct TimePickerView: UIViewRepresentable {
     let selection: Binding<TimeValue>
     let mins: [Int] = Array(0..<121)
-    let secs: [Int] = Array(0..<60)
+    let secs: [Int] = [0, 10, 20, 30, 40, 50]
 
     //makeCoordinator()
     func makeCoordinator() -> TimePickerView.Coordinator {

@@ -27,12 +27,28 @@ struct RecipeDetail: View {
         return index == recipe.stepArray.count
     }
     
-    var currentStep: Step {
-        return recipe.getStepAt(index: index) ?? Step()
+    var timerSeconds: Int32 {
+        return currentStep?.seconds ?? 0
+    }
+    
+    var timerValue: TimeValue? {
+        return timerSeconds > 0 ? TimeValue(seconds: timerSeconds) : nil
+    }
+    
+    var doesTimerExist: Bool {
+        return timerValue != nil
+    }
+    
+    var currentStep: Step? {
+        return recipe.getStepAt(index: index)
+    }
+    
+    var timerRemainingText: String {
+        return TimeValue(seconds: timerRemaining).humanized
     }
     
     var timerText: String {
-        return TimeValue(seconds: timerRemaining).humanized
+        return timerValue?.humanized ?? ""
     }
     
     var text: String {
@@ -41,7 +57,7 @@ struct RecipeDetail: View {
         } else if isEnd {
             return "수고하셨어요. 맛있게 드세요!"
         } else {
-            return currentStep.text ?? ""
+            return currentStep?.text ?? ""
         }
     }
     
@@ -60,10 +76,18 @@ struct RecipeDetail: View {
     func updateTimerRemaining() {
         if let startedAt = timerStartedAt {
             let elapsedSeconds = Int32(Date().timeIntervalSince(startedAt))
-            timerRemaining = max(currentStep.seconds - elapsedSeconds, 0)
+            timerRemaining = max(timerSeconds - elapsedSeconds, 0)
         } else {
-            timerRemaining = currentStep.seconds
+            timerRemaining = timerSeconds
         }
+    }
+    
+    func openTimerSheet() {
+        isTimerSheetOpen = true
+    }
+    
+    func closeTimerSheet() {
+        isTimerSheetOpen = false
     }
     
     func startTimer() {
@@ -113,8 +137,8 @@ struct RecipeDetail: View {
                     Spacer()
                     
                     // 남은 시간이 아니라 타이머 자체가 단계에 존재하는지 여부로 렌더해야 할 거 같다.
-                    if timerRemaining > 0 {
-                        Button(action: startTimer, label: {
+                    if doesTimerExist {
+                        Button(action: openTimerSheet, label: {
                             HStack {
                                 // 타이머를 여는 동시에 시작하도록 하는 것도 방법이다.
                                 Text("\(timerText) 타이머 열기")
@@ -141,13 +165,11 @@ struct RecipeDetail: View {
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $isTimerSheetOpen) {
                 NavigationView {
-                    Text(timerText)
+                    Text(timerRemainingText)
                         .font(.title)
                         .toolbar {
                             ToolbarItem(placement: .cancellationAction) {
-                                Button("타이머 닫기") {
-                                    isTimerSheetOpen = false
-                                }
+                                Button("타이머 닫기", action: closeTimerSheet)
                             }
                         }
                 }
