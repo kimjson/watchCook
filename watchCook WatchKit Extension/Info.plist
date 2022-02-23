@@ -16,5 +16,9 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>WKBackgroundModes</key>
+	<array>
+		<string>alarm</string>
+	</array>
 </dict>
 </plist>
