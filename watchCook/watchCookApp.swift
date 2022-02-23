@@ -16,10 +16,17 @@ struct watchCookApp: App {
     @StateObject var dataController = DataController.shared // StateObject 로 감싸주면 preview 에서 실행되는 것을 막을 수 있음
     #endif
     
+    #if os(watchOS)
+    @StateObject var alarmController = AlarmController()
+    #endif
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, dataController.container.viewContext)
+            #if os(watchOS)
+                .environmentObject(alarmController)
+            #endif
         }
     }
 }

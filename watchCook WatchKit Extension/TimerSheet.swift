@@ -11,6 +11,8 @@ struct TimerSheet: View {
     var isOpen: Binding<Bool>
     var seconds: Int32
     
+    @EnvironmentObject var alarmController: AlarmController
+    
     @State private var remainingSeconds: Int32 = 0
     @State private var startedAt: Date?
     
@@ -60,6 +62,8 @@ struct TimerSheet: View {
         startedAt = Date()
         updateRemainingSeconds()
         
+        alarmController.scheduleAlarm(at: startedAt!.addingTimeInterval(Double(remainingSeconds)))
+        
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if remainingSeconds == 0 {
                 timer.invalidate()
@@ -98,6 +102,7 @@ struct TimerSheet: View {
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
+                    // TODO: 타이머 닫아도 타이머가 멈추지 않도록 하고, 타이머 열기 버튼이 진행 중인 타이머 상태를 잘 묘사할 수 있도록 하자.
                     Button("타이머 닫기", action: closeTimerSheet)
                 }
             }
