@@ -18,6 +18,11 @@ class AlarmController: NSObject, ObservableObject, WKExtendedRuntimeSessionDeleg
         session?.start(at: at)
     }
     
+    func invalidateAlarm() {
+        session?.invalidate()
+        session = nil
+    }
+    
     // MARK:- Extended Runtime Session Delegate Methods
     func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
         // Track when your session starts.

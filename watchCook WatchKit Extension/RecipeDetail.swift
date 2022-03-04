@@ -127,6 +127,7 @@ struct RecipeDetail: View {
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $isTimerSheetOpen) {
                 TimerSheet(isOpen: $isTimerSheetOpen, seconds: timerSeconds)
+                    .interactiveDismissDisabled()
             }
         }
     }

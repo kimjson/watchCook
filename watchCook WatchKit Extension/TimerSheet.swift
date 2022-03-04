@@ -15,6 +15,7 @@ struct TimerSheet: View {
     
     @State private var remainingSeconds: Int32 = 0
     @State private var startedAt: Date?
+    @State private var timer: Timer?
     
     // MARK: 계산되는 속성
     var isStarted: Bool {
@@ -39,7 +40,7 @@ struct TimerSheet: View {
         } else if remainingSeconds > 0 {
             return "정지"
         } else if remainingSeconds == 0 {
-            return "다시 시작"
+            return "알람 중단 후 닫기"
         } else {
             return "시작"
         }
@@ -48,6 +49,7 @@ struct TimerSheet: View {
     // MARK: 이벤트 처리 함수
     
     func closeTimerSheet() {
+        stopTimer()
         isOpen.wrappedValue = false
     }
     
@@ -64,17 +66,23 @@ struct TimerSheet: View {
         
         alarmController.scheduleAlarm(at: startedAt!.addingTimeInterval(Double(remainingSeconds)))
         
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        self.timer = Timer(timeInterval: 1.0, repeats: true) { timer in
             if remainingSeconds == 0 {
                 timer.invalidate()
             }
 
             updateRemainingSeconds()
         }
+        
+        if let timer = self.timer {
+            RunLoop.current.add(timer, forMode: .default)
+        }
     }
     
-    func stopTimer(timer: Timer) {
-        timer.invalidate()
+    func stopTimer() {
+        self.timer?.invalidate()
+        self.timer = nil
+        alarmController.invalidateAlarm()
         startedAt = nil
     }
     
@@ -82,8 +90,9 @@ struct TimerSheet: View {
         if !isStarted {
             startTimer()
         } else if remainingSeconds > 0 {
-            // TODO: 타이머 상태 선언 후 적절한 초기값 설정, .scheduledTimer 대신 생성만 하는 메서드 사용 후 타이머 시작은 추후에
-//            stopTimer()
+            stopTimer()
+        } else if remainingSeconds == 0 {
+            closeTimerSheet()
         } else {
             startTimer()
         }
