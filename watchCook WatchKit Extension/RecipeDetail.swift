@@ -43,10 +43,6 @@ struct RecipeDetail: View {
         return recipe.getStepAt(index: index)
     }
     
-    var timerRemainingText: String {
-        return TimeValue(seconds: timerRemaining).humanized
-    }
-    
     var timerText: String {
         return timerValue?.humanized ?? ""
     }
@@ -73,53 +69,19 @@ struct RecipeDetail: View {
     
     // MARK: 사용자의 액션 혹은 이벤트 처리
     
-    func updateTimerRemaining() {
-        if let startedAt = timerStartedAt {
-            let elapsedSeconds = Int32(Date().timeIntervalSince(startedAt))
-            timerRemaining = max(timerSeconds - elapsedSeconds, 0)
-        } else {
-            timerRemaining = timerSeconds
-        }
-    }
-    
     func openTimerSheet() {
         isTimerSheetOpen = true
-    }
-    
-    func closeTimerSheet() {
-        isTimerSheetOpen = false
-    }
-    
-    func startTimer() {
-        if timerStartedAt == nil {
-            isTimerSheetOpen = true
-//            timerStartedAt = Date()
-//            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-//                if timerRemaining == 0 {
-//                    timerStartedAt = nil
-//                    timer.invalidate()
-//                }
-//
-//                updateTimerRemaining()
-//            }
-        }
     }
     
     func prevStep() {
         if !isStart {
             index -= 1
-            if !isStart {
-                updateTimerRemaining()
-            }
         }
     }
     
     func nextStep() {
         if !isEnd {
             index += 1
-            if !isEnd {
-                updateTimerRemaining()
-            }
         } else {
             presentation.wrappedValue.dismiss()
         }
@@ -164,15 +126,7 @@ struct RecipeDetail: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $isTimerSheetOpen) {
-                NavigationView {
-                    Text(timerRemainingText)
-                        .font(.title)
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("타이머 닫기", action: closeTimerSheet)
-                            }
-                        }
-                }
+                TimerSheet(isOpen: $isTimerSheetOpen, seconds: timerSeconds)
             }
         }
     }
