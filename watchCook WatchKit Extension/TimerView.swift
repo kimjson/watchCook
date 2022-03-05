@@ -13,6 +13,7 @@ struct TimerView: View {
     @EnvironmentObject var alarmController: AlarmController
     @Environment(\.presentationMode) var presentation
     
+    @State private var totalSeconds: Int32 = 0
     @State private var remainingSeconds: Int32 = 0
     @State private var startedAt: Date?
     @State private var timer: Timer?
@@ -24,7 +25,7 @@ struct TimerView: View {
     
     var remainingTimeText: String {
         if !isStarted {
-            return TimeValue(seconds: seconds).humanized
+            return TimeValue(seconds: totalSeconds).humanized
         } else if remainingSeconds > 0 {
             return TimeValue(seconds: remainingSeconds).humanized
         } else if remainingSeconds == 0 {
@@ -34,15 +35,27 @@ struct TimerView: View {
         }
     }
     
-    var buttonText: String {
+    var leftButtonText: String {
         return "종료"
     }
     
-    var secondaryButtonText: String {
+    var rightButtonText: String {
         if remainingSeconds == 0 {
             return "재시작"
-        } else {
+        } else if isStarted {
             return "일시정지"
+        } else {
+            return "재개"
+        }
+    }
+    
+    var rightButtonSymbolName: String {
+        if remainingSeconds == 0 {
+            return "arrow.counterclockwise"
+        } else if isStarted {
+            return "pause"
+        } else {
+            return "play.fill"
         }
     }
     
@@ -51,11 +64,21 @@ struct TimerView: View {
     func updateRemainingSeconds() {
         if let startedAt = self.startedAt {
             let elapsedSeconds = Int32(Date().timeIntervalSince(startedAt))
-            remainingSeconds = max(seconds - elapsedSeconds, 0)
+            remainingSeconds = max(totalSeconds - elapsedSeconds, 0)
         }
     }
 
     func startTimer() {
+        totalSeconds = seconds
+        resumeTimer()
+    }
+    
+    func pauseTimer() {
+        totalSeconds = remainingSeconds
+        stopTimer()
+    }
+    
+    func resumeTimer() {
         startedAt = Date()
         updateRemainingSeconds()
         
@@ -85,26 +108,20 @@ struct TimerView: View {
         presentation.wrappedValue.dismiss()
     }
     
-    func handleButtonClick() {
-        if !isStarted {
+    func handleRightButtonClick() {
+        if remainingSeconds == 0 {
+            stopTimer()
             startTimer()
-        } else if remainingSeconds > 0 {
-            stopTimer()
-        } else if remainingSeconds == 0 {
-            stopTimer()
-            navigateBack()
+        } else if isStarted {
+            pauseTimer()
         } else {
-            startTimer()
+            resumeTimer()
         }
     }
     
     func closeTimer() {
         stopTimer()
         navigateBack()
-    }
-    
-    func pauseTimer() {
-        stopTimer()
     }
     
     // MARK: 바디
@@ -117,11 +134,11 @@ struct TimerView: View {
             Spacer()
             HStack {
                 Button(role: .destructive, action: closeTimer) {
-                    Label(buttonText, systemImage: "xmark")
+                    Label(leftButtonText, systemImage: "xmark")
                 }
                 Spacer()
-                Button(action: pauseTimer) {
-                    Label(secondaryButtonText, systemImage: "pause")
+                Button(action: handleRightButtonClick) {
+                    Label(rightButtonText, systemImage: rightButtonSymbolName)
                 }
             }
             .font(.subheadline.bold())
