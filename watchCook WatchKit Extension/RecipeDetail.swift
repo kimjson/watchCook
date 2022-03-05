@@ -64,6 +64,14 @@ struct RecipeDetail: View {
         }
     }
     
+    var primaryButtonSymbolName: String {
+        if isEnd {
+            return "xmark"
+        } else {
+            return "arrow.right"
+        }
+    }
+    
     // MARK: 사용자의 액션 혹은 이벤트 처리
     
     func prevStep() {
@@ -109,11 +117,26 @@ struct RecipeDetail: View {
 
                     HStack{
                         if !isStart {
-                            Button("이전", action: prevStep)
+                            Button(action: prevStep) {
+                                HStack {
+                                    Image(systemName: "arrow.left")
+                                    Text("이전")
+                                }
+                                .font(.body.bold())
+                            }
+
+                            Spacer()
                         }
                         
-                        Button(primaryButtonText, action: nextStep)
+                        Button(action: nextStep) {
+                            HStack {
+                                Image(systemName: primaryButtonSymbolName)
+                                Text(primaryButtonText)
+                            }
+                            .font(.body.bold())
+                        }
                             .buttonStyle(.borderedProminent)
+                            
                     }
                 }
                 .frame(minHeight: geometry.size.height)

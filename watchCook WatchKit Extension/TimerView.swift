@@ -11,6 +11,7 @@ struct TimerView: View {
     var seconds: Int32
     
     @EnvironmentObject var alarmController: AlarmController
+    @Environment(\.presentationMode) var presentation
     
     @State private var remainingSeconds: Int32 = 0
     @State private var startedAt: Date?
@@ -34,22 +35,18 @@ struct TimerView: View {
     }
     
     var buttonText: String {
-        if !isStarted {
-            return "시작"
-        } else if remainingSeconds > 0 {
-            return "정지"
-        } else if remainingSeconds == 0 {
-            return "알람 중단 후 닫기"
+        return "종료"
+    }
+    
+    var secondaryButtonText: String {
+        if remainingSeconds == 0 {
+            return "재시작"
         } else {
-            return "시작"
+            return "일시정지"
         }
     }
     
     // MARK: 이벤트 처리 함수
-    
-    func closeTimerSheet() {
-        stopTimer()
-    }
     
     func updateRemainingSeconds() {
         if let startedAt = self.startedAt {
@@ -84,17 +81,33 @@ struct TimerView: View {
         startedAt = nil
     }
     
+    func navigateBack() {
+        presentation.wrappedValue.dismiss()
+    }
+    
     func handleButtonClick() {
         if !isStarted {
             startTimer()
         } else if remainingSeconds > 0 {
             stopTimer()
         } else if remainingSeconds == 0 {
-            closeTimerSheet()
+            stopTimer()
+            navigateBack()
         } else {
             startTimer()
         }
     }
+    
+    func closeTimer() {
+        stopTimer()
+        navigateBack()
+    }
+    
+    func pauseTimer() {
+        stopTimer()
+    }
+    
+    // MARK: 바디
     
     var body: some View {
         VStack {
@@ -103,7 +116,34 @@ struct TimerView: View {
                 .font(.title)
             Spacer()
             HStack {
-                Button(buttonText, action: handleButtonClick)
+                Button(role: .destructive, action: closeTimer) {
+                    HStack {
+                        Image(systemName: "xmark")
+                        Text(buttonText)
+                    }
+                    .font(.subheadline.bold())
+                }
+                Spacer()
+                Button(action: pauseTimer) {
+                    HStack {
+                        Image(systemName: "pause.fill")
+                        Text(secondaryButtonText)
+                            .bold()
+                    }
+                    .font(.subheadline)
+                }
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
+                    stopTimer()
+                    navigateBack()
+                }, label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundStyle(.secondary)
+                })
             }
         }
         .onAppear(perform: startTimer)
