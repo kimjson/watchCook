@@ -26,7 +26,7 @@
 		3FDA2BE027C32ABF00F171A2 /* TimeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDA2BDF27C32ABF00F171A2 /* TimeValue.swift */; };
 		3FDA2BE127C32ABF00F171A2 /* TimeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDA2BDF27C32ABF00F171A2 /* TimeValue.swift */; };
 		3FEC100227BF1EF600E05867 /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEC100127BF1EF600E05867 /* TimePickerView.swift */; };
-		3FF620E727C4745700B664FC /* TimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF620E627C4745700B664FC /* TimerSheet.swift */; };
+		3FF620E727C4745700B664FC /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF620E627C4745700B664FC /* TimerView.swift */; };
 		3FF7BC6B27ABBAD500F8E8B7 /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7BC6A27ABBAD500F8E8B7 /* RecipeDetail.swift */; };
 		3FF7BC7727B09FE900F8E8B7 /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF7BC7627B09FE900F8E8B7 /* RecipeDetail.swift */; };
 		3FF7BC7827B0A29600F8E8B7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9EC87927A68DB200281943 /* ContentView.swift */; };
@@ -108,7 +108,7 @@
 		3F9EC89D27A68DB400281943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FDA2BDF27C32ABF00F171A2 /* TimeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeValue.swift; sourceTree = "<group>"; };
 		3FEC100127BF1EF600E05867 /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
-		3FF620E627C4745700B664FC /* TimerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSheet.swift; sourceTree = "<group>"; };
+		3FF620E627C4745700B664FC /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		3FF7BC6827ABB9CC00F8E8B7 /* RecipeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRow.swift; sourceTree = "<group>"; };
 		3FF7BC6A27ABBAD500F8E8B7 /* RecipeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetail.swift; sourceTree = "<group>"; };
 		3FF7BC7627B09FE900F8E8B7 /* RecipeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetail.swift; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 				3F07EB8927B5D3A900F5AEB5 /* watchCook WatchKit Extension.entitlements */,
 				3F9EC89227A68DB400281943 /* ContentView.swift */,
 				3FF7BC6A27ABBAD500F8E8B7 /* RecipeDetail.swift */,
-				3FF620E627C4745700B664FC /* TimerSheet.swift */,
+				3FF620E627C4745700B664FC /* TimerView.swift */,
 				3F5C4CA427C5E37300F83CB8 /* AlarmController.swift */,
 				3F9EC89627A68DB400281943 /* ComplicationController.swift */,
 				3F9EC89827A68DB400281943 /* Assets.xcassets */,
@@ -407,7 +407,7 @@
 			files = (
 				3FA610E827B3572D005B4A7B /* watchCookApp.swift in Sources */,
 				3F9B1D9F27B3549400B898EF /* DataController.swift in Sources */,
-				3FF620E727C4745700B664FC /* TimerSheet.swift in Sources */,
+				3FF620E727C4745700B664FC /* TimerView.swift in Sources */,
 				3FDA2BE127C32ABF00F171A2 /* TimeValue.swift in Sources */,
 				3FF7BC7A27B0AB9000F8E8B7 /* RecipeRow.swift in Sources */,
 				3F5C4CA527C5E37300F83CB8 /* AlarmController.swift in Sources */,

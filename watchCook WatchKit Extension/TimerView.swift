@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TimerSheet: View {
+struct TimerView: View {
     var seconds: Int32
     
     @EnvironmentObject var alarmController: AlarmController
@@ -113,6 +113,6 @@ struct TimerSheet: View {
 
 struct TimerSheet_Previews: PreviewProvider {
     static var previews: some View {
-        TimerSheet(seconds: 10)
+        TimerView(seconds: 10)
     }
 }

@@ -93,7 +93,7 @@ struct RecipeDetail: View {
                     
                     // 남은 시간이 아니라 타이머 자체가 단계에 존재하는지 여부로 렌더해야 할 거 같다.
                     if doesTimerExist {
-                        NavigationLink(destination: TimerSheet(seconds: timerSeconds), label: {
+                        NavigationLink(destination: TimerView(seconds: timerSeconds), label: {
                             HStack {
                                 // 타이머를 여는 동시에 시작하도록 하는 것도 방법이다.
                                 Text("\(timerText) 타이머 열기")
