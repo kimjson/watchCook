@@ -11,9 +11,6 @@ struct RecipeDetail: View {
     @Environment(\.presentationMode) var presentation
     
     @State private var index: Int = -1
-    @State private var timerStartedAt: Date? = nil
-    @State private var timerRemaining: Int32 = 0
-    @State private var isTimerSheetOpen: Bool = false
 
     var recipe: Recipe
     
@@ -69,10 +66,6 @@ struct RecipeDetail: View {
     
     // MARK: 사용자의 액션 혹은 이벤트 처리
     
-    func openTimerSheet() {
-        isTimerSheetOpen = true
-    }
-    
     func prevStep() {
         if !isStart {
             index -= 1
@@ -100,7 +93,7 @@ struct RecipeDetail: View {
                     
                     // 남은 시간이 아니라 타이머 자체가 단계에 존재하는지 여부로 렌더해야 할 거 같다.
                     if doesTimerExist {
-                        Button(action: openTimerSheet, label: {
+                        NavigationLink(destination: TimerSheet(seconds: timerSeconds), label: {
                             HStack {
                                 // 타이머를 여는 동시에 시작하도록 하는 것도 방법이다.
                                 Text("\(timerText) 타이머 열기")
@@ -109,6 +102,7 @@ struct RecipeDetail: View {
                             
                         })
                             .buttonStyle(.plain)
+                            .padding(.bottom, 4)
 
                         Spacer()
                     }
@@ -125,10 +119,6 @@ struct RecipeDetail: View {
                 .frame(minHeight: geometry.size.height)
             }
             .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $isTimerSheetOpen) {
-                TimerSheet(isOpen: $isTimerSheetOpen, seconds: timerSeconds)
-                    .interactiveDismissDisabled()
-            }
         }
     }
 }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TimerSheet: View {
-    var isOpen: Binding<Bool>
     var seconds: Int32
     
     @EnvironmentObject var alarmController: AlarmController
@@ -50,7 +49,6 @@ struct TimerSheet: View {
     
     func closeTimerSheet() {
         stopTimer()
-        isOpen.wrappedValue = false
     }
     
     func updateRemainingSeconds() {
@@ -99,29 +97,22 @@ struct TimerSheet: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Spacer()
-                Text(remainingTimeText)
-                    .font(.title)
-                Spacer()
-                HStack {
-                    Button(buttonText, action: handleButtonClick)
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    // TODO: 타이머 닫아도 타이머가 멈추지 않도록 하고, 타이머 열기 버튼이 진행 중인 타이머 상태를 잘 묘사할 수 있도록 하자.
-                    Button("타이머 닫기", action: closeTimerSheet)
-                }
+        VStack {
+            Spacer()
+            Text(remainingTimeText)
+                .font(.title)
+            Spacer()
+            HStack {
+                Button(buttonText, action: handleButtonClick)
             }
         }
         .onAppear(perform: startTimer)
+        
     }
 }
 
 struct TimerSheet_Previews: PreviewProvider {
     static var previews: some View {
-        TimerSheet(isOpen: .constant(true), seconds: 10)
+        TimerSheet(seconds: 10)
     }
 }
