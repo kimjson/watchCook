@@ -46,6 +46,7 @@ struct ContentView: View {
                     try? moc.save()
                 }
             }
+            .listStyle(.insetGrouped)
             .navigationTitle("레시피 목록")
             .searchable(text: $searchText, prompt: "제목으로 검색")
             .disableAutocorrection(true)

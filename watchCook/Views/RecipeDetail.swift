@@ -137,12 +137,13 @@ struct RecipeDetail: View {
                         .disableAutocorrection(true)
                         .frame(minHeight: 40)
                     HStack {
+                        Spacer()
                         Button(stepTimerText(step: recipe.getStepAt(index: i)!)) {
                             editedStep = recipe.getStepAt(index: i)
                             timeValue = TimeValue(seconds: editedStep?.seconds ?? 0)
                         }
-                        .padding(.leading, 5)
-                        Spacer()
+                        .padding([.leading, .bottom], 5)
+                       
                     }
                     
                 }
@@ -159,12 +160,9 @@ struct RecipeDetail: View {
                 
                 focusedIndex = formData.steps.count - 1
             }, label: {
-                HStack {
-                    Image(systemName: "plus.circle")
-                    Text("단계 추가")
-                }.font(.headline).foregroundColor(Color.white)
+                Label("단계 추가", systemImage: "rectangle.stack.fill.badge.plus")
+                    .font(.body.bold()).foregroundColor(Color.white)
             })
-                .padding(.leading, 4)
                 .listRowBackground(Color.blue)
         }
         .navigationTitle("레시피 상세")
