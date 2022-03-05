@@ -59,6 +59,37 @@ struct RecipeTitle: View {
     }
 }
 
+struct StepTimerLabel: View {
+    var step: Step?
+    
+    var text: String {
+        if let step = step {
+            if step.seconds > 0 {
+                return "\(TimeValue(seconds: step.seconds).humanized) 타이머"
+            } else {
+                return "타이머 추가"
+            }
+        }
+        return ""
+    }
+    
+    var symbolName: String {
+        if let step = step {
+            if step.seconds > 0 {
+                return "alarm"
+            } else {
+                return "plus.circle"
+            }
+        }
+        return ""
+    }
+    
+    var body: some View {
+        Label(text, systemImage: symbolName)
+            .labelStyle(CompactLabelStyle())
+    }
+}
+
 struct RecipeDetail: View {
     @Environment(\.managedObjectContext) var moc
     
@@ -95,14 +126,6 @@ struct RecipeDetail: View {
         }
     }
     
-    func stepTimerText(step: Step) -> String {
-        if step.seconds > 0 {
-            return "\(TimeValue(seconds: step.seconds).humanized) 타이머"
-        } else {
-            return "타이머 추가"
-        }
-    }
-    
     func closeSheet() {
         if let targetStep = editedStep {
             if targetStep.seconds != timeValue.seconds {
@@ -121,7 +144,7 @@ struct RecipeDetail: View {
         
         List {
             ForEach(0..<formData.steps.count, id: \.self) { i in
-                VStack {
+                VStack(spacing: 0) {
                     TextEditor(
                         text: $formData.steps[i].text
                     )
@@ -135,16 +158,18 @@ struct RecipeDetail: View {
                             }
                         }
                         .disableAutocorrection(true)
+                        .lineSpacing(4)
                         .frame(minHeight: 40)
                     HStack {
-                        Spacer()
-                        Button(stepTimerText(step: recipe.getStepAt(index: i)!)) {
+                        Button(action: {
                             editedStep = recipe.getStepAt(index: i)
                             timeValue = TimeValue(seconds: editedStep?.seconds ?? 0)
+                        }) {
+                            StepTimerLabel(step: recipe.getStepAt(index: i))
                         }
-                        .padding([.leading, .bottom], 5)
-                       
+                        Spacer()
                     }
+                    .padding([.leading, .bottom], 6)
                     
                 }
             }
