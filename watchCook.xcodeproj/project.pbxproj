@@ -625,7 +625,7 @@
 				DEVELOPMENT_TEAM = 7TX57ATAJD;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = watchCook_WatchKit_Extension;
-				INFOPLIST_KEY_CFBundleDisplayName = "watchCook WatchKit App";
+				INFOPLIST_KEY_CFBundleDisplayName = "와치쿡";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = dev.kimjs.watchCook;
 				MARKETING_VERSION = 1.0;
@@ -651,7 +651,7 @@
 				DEVELOPMENT_TEAM = 7TX57ATAJD;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = watchCook_WatchKit_Extension;
-				INFOPLIST_KEY_CFBundleDisplayName = "watchCook WatchKit App";
+				INFOPLIST_KEY_CFBundleDisplayName = "와치쿡";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = dev.kimjs.watchCook;
 				MARKETING_VERSION = 1.0;
