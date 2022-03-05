@@ -14,12 +14,10 @@ struct TimePickerView: UIViewRepresentable {
     let mins: [Int] = Array(0..<121)
     let secs: [Int] = [0, 10, 20, 30, 40, 50]
 
-    //makeCoordinator()
     func makeCoordinator() -> TimePickerView.Coordinator {
         Coordinator(self)
     }
 
-    //makeUIView(context:)
     func makeUIView(context: UIViewRepresentableContext<TimePickerView>) -> UIPickerView {
         let picker = UIPickerView(frame: .zero)
 
@@ -33,28 +31,23 @@ struct TimePickerView: UIViewRepresentable {
         return picker
     }
 
-    //updateUIView(_:context:)
     func updateUIView(_ view: UIPickerView, context: UIViewRepresentableContext<TimePickerView>) {}
 
     class Coordinator: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
         var parent: TimePickerView
 
-        //init(_:)
         init(_ pickerView: TimePickerView) {
             self.parent = pickerView
         }
 
-        //numberOfComponents(in:)
         func numberOfComponents(in pickerView: UIPickerView) -> Int {
             return 2
         }
 
-        //pickerView(_:numberOfRowsInComponent:)
         func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
             return [parent.mins.count, parent.secs.count][component]
         }
 
-        //pickerView(_:titleForRow:forComponent:)
         func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
             if component == 0 {
                 return "\(parent.mins[row])분"
@@ -63,7 +56,6 @@ struct TimePickerView: UIViewRepresentable {
             }
         }
 
-        //pickerView(_:didSelectRow:inComponent:)
         func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
             let minIndex = pickerView.selectedRow(inComponent: 0)
             let secIndex = pickerView.selectedRow(inComponent: 1)

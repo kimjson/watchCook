@@ -117,22 +117,14 @@ struct TimerView: View {
             Spacer()
             HStack {
                 Button(role: .destructive, action: closeTimer) {
-                    HStack {
-                        Image(systemName: "xmark")
-                        Text(buttonText)
-                    }
-                    .font(.subheadline.bold())
+                    Label(buttonText, systemImage: "xmark")
                 }
                 Spacer()
                 Button(action: pauseTimer) {
-                    HStack {
-                        Image(systemName: "pause.fill")
-                        Text(secondaryButtonText)
-                            .bold()
-                    }
-                    .font(.subheadline)
+                    Label(secondaryButtonText, systemImage: "pause")
                 }
             }
+            .font(.subheadline.bold())
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {

@@ -60,28 +60,22 @@ struct RecipeTitle: View {
 }
 
 struct StepTimerLabel: View {
-    var step: Step?
+    var step: Step
     
     var text: String {
-        if let step = step {
-            if step.seconds > 0 {
-                return "\(TimeValue(seconds: step.seconds).humanized) 타이머"
-            } else {
-                return "타이머 추가"
-            }
+        if step.seconds > 0 {
+            return "\(TimeValue(seconds: step.seconds).humanized) 타이머"
+        } else {
+            return "타이머 추가"
         }
-        return ""
     }
     
     var symbolName: String {
-        if let step = step {
-            if step.seconds > 0 {
-                return "alarm"
-            } else {
-                return "plus.circle"
-            }
+        if step.seconds > 0 {
+            return "alarm"
+        } else {
+            return "plus.circle"
         }
-        return ""
     }
     
     var body: some View {
@@ -145,28 +139,38 @@ struct RecipeDetail: View {
         List {
             ForEach(0..<formData.steps.count, id: \.self) { i in
                 VStack(spacing: 0) {
-                    TextEditor(
-                        text: $formData.steps[i].text
-                    )
-                        .focused($focusedIndex, equals: i)
-                        .onChange(of: focusedIndex) { focusedIndex in
-                            if let targetStep = recipe.getStepAt(index: i) {
-                                if targetStep.text != formData.steps[i].text {
-                                    recipe.stepArray[i].text = formData.steps[i].text
-                                    try? moc.save()
+                    // ZStack과 의미 없는 텍스트를 추가한 이유: https://stackoverflow.com/questions/62620613/dynamic-row-hight-containing-texteditor-inside-a-list-in-swiftui 참조.
+                    ZStack {
+                        TextEditor(
+                            text: $formData.steps[i].text
+                        )
+                            .focused($focusedIndex, equals: i)
+                            .onChange(of: focusedIndex) { focusedIndex in
+                                if let targetStep = recipe.getStepAt(index: i) {
+                                    if targetStep.text != formData.steps[i].text {
+                                        recipe.stepArray[i].text = formData.steps[i].text
+                                        try? moc.save()
+                                    }
                                 }
                             }
-                        }
-                        .disableAutocorrection(true)
-                        .lineSpacing(4)
-                        .frame(minHeight: 40)
+                            .disableAutocorrection(true)
+                            .lineSpacing(4)
+                        Text("공간을 확보하기 위한 의미 없는 텍스트").opacity(0).padding(.all, 8)
+                    }
+                    
+                        
                     HStack {
                         Button(action: {
                             editedStep = recipe.getStepAt(index: i)
                             timeValue = TimeValue(seconds: editedStep?.seconds ?? 0)
                         }) {
-                            StepTimerLabel(step: recipe.getStepAt(index: i))
+                            if let step = recipe.getStepAt(index: i) {
+                                StepTimerLabel(step: step)
+                                    .font(.subheadline)
+                            }
                         }
+                        .buttonStyle(.bordered)
+                        
                         Spacer()
                     }
                     .padding([.leading, .bottom], 6)

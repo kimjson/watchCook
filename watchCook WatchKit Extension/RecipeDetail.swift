@@ -48,7 +48,7 @@ struct RecipeDetail: View {
         if isStart {
             return "준비되셨나요?"
         } else if isEnd {
-            return "수고하셨어요. 맛있게 드세요!"
+            return "모든 단계가 끝났습니다.\n맛있게 드세요!"
         } else {
             return currentStep?.text ?? ""
         }
@@ -90,58 +90,44 @@ struct RecipeDetail: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ScrollView {
-                VStack {
+                VStack(spacing: 2) {
                     Spacer()
-                    
                     Text(text)
-                        .navigationTitle(recipe.safeTitle)
+                        .minimumScaleFactor(0.8)
+                    
+                    if doesTimerExist {
+                        Spacer()
+                        NavigationLink(destination: TimerView(seconds: timerSeconds), label: {
+                            Label("\(timerText) 타이머", systemImage: "alarm")
+                        })
+                            .buttonStyle(.borderless)
+                            .foregroundColor(.accentColor)
+                            .font(.subheadline.bold())
+                    }
                     
                     Spacer()
-                    
-                    // 남은 시간이 아니라 타이머 자체가 단계에 존재하는지 여부로 렌더해야 할 거 같다.
-                    if doesTimerExist {
-                        NavigationLink(destination: TimerView(seconds: timerSeconds), label: {
-                            HStack {
-                                // 타이머를 여는 동시에 시작하도록 하는 것도 방법이다.
-                                Text("\(timerText) 타이머 열기")
-                                Image(systemName: "chevron.right")
-                            }
-                            
-                        })
-                            .buttonStyle(.plain)
-                            .padding(.bottom, 4)
-
-                        Spacer()
-                    }
 
                     HStack{
                         if !isStart {
                             Button(action: prevStep) {
-                                HStack {
-                                    Image(systemName: "arrow.left")
-                                    Text("이전")
-                                }
-                                .font(.body.bold())
+                                Label("이전", systemImage: "arrow.left")
+                                    .font(.body.bold())
                             }
 
                             Spacer()
                         }
                         
                         Button(action: nextStep) {
-                            HStack {
-                                Image(systemName: primaryButtonSymbolName)
-                                Text(primaryButtonText)
-                            }
-                            .font(.body.bold())
+                            Label(primaryButtonText, systemImage: primaryButtonSymbolName)
+                                .font(.body.bold())
                         }
                             .buttonStyle(.borderedProminent)
                             
                     }
                 }
                 .frame(minHeight: geometry.size.height)
-            }
-            .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle(recipe.safeTitle)
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

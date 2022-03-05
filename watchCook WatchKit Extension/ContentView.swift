@@ -32,6 +32,7 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("레시피 목록")
+            .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $searchText, prompt: "제목으로 검색")
         }
     }

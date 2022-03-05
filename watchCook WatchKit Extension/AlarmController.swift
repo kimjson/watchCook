@@ -23,10 +23,9 @@ class AlarmController: NSObject, ObservableObject, WKExtendedRuntimeSessionDeleg
         session = nil
     }
     
-    // MARK:- Extended Runtime Session Delegate Methods
+    // MARK: Extended Runtime Session Delegate Methods
+    
     func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
-        // Track when your session starts.
-        // TODO: 알람 창에서 유저가 앱을 열었을 때 세션 비활성화하기 (이걸 알아서 안 해준다고?)
         session?.notifyUser(hapticType: .notification)
     }
 
