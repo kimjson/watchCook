@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+enum TimerStatus {
+    case initializing
+    case paused
+    case active
+    case expired
+}
+
 struct TimerView: View {
     var seconds: Int32
     
@@ -23,39 +30,50 @@ struct TimerView: View {
         return startedAt != nil
     }
     
-    var remainingTimeText: String {
-        if !isStarted {
-            return TimeValue(seconds: totalSeconds).humanized
+    var status: TimerStatus {
+        if totalSeconds == 0 {
+            return .initializing
+        } else if startedAt == nil {
+            return .paused
         } else if remainingSeconds > 0 {
-            return TimeValue(seconds: remainingSeconds).humanized
-        } else if remainingSeconds == 0 {
-            return "타이머 완료!"
+            return .active
         } else {
-            return ""
+            return .expired
         }
     }
     
-    var leftButtonText: String {
-        return "종료"
+    var remainingTimeText: String {
+        switch status {
+        case .initializing:
+            return TimeValue(seconds: seconds).humanized
+        case .active:
+            return TimeValue(seconds: remainingSeconds).humanized
+        case .paused:
+            return TimeValue(seconds: totalSeconds).humanized
+        case .expired:
+            return "타이머 완료!"
+        }
     }
-    
+        
     var rightButtonText: String {
-        if remainingSeconds == 0 {
-            return "재시작"
-        } else if isStarted {
+        switch status {
+        case .initializing, .active:
             return "일시정지"
-        } else {
+        case .paused:
             return "재개"
+        case .expired:
+            return "재시작"
         }
     }
     
     var rightButtonSymbolName: String {
-        if remainingSeconds == 0 {
-            return "arrow.counterclockwise"
-        } else if isStarted {
+        switch status {
+        case .initializing, .active:
             return "pause"
-        } else {
+        case .paused:
             return "play.fill"
+        case .expired:
+            return "arrow.counterclockwise"
         }
     }
     
@@ -79,6 +97,7 @@ struct TimerView: View {
     }
     
     func resumeTimer() {
+        precondition(totalSeconds > 0)
         startedAt = Date()
         updateRemainingSeconds()
         
@@ -104,21 +123,29 @@ struct TimerView: View {
         startedAt = nil
     }
     
+    func restartTimer() {
+        stopTimer()
+        startTimer()
+    }
+    
     func navigateBack() {
         presentation.wrappedValue.dismiss()
     }
     
     func handleRightButtonClick() {
-        if remainingSeconds == 0 {
-            stopTimer()
-            startTimer()
-        } else if isStarted {
+        switch status {
+        case .initializing:
+            break
+        case .active:
             pauseTimer()
-        } else {
+        case .paused:
             resumeTimer()
+        case .expired:
+            restartTimer()
         }
     }
     
+    // TODO: 타이머 페이지에서 뒤로 가기 눌러도 타이머가 진행되고, 그동안 다른 단계를 둘러볼 수 있도록 수정해야 함
     func closeTimer() {
         stopTimer()
         navigateBack()
@@ -134,22 +161,20 @@ struct TimerView: View {
             Spacer()
             HStack {
                 Button(role: .destructive, action: closeTimer) {
-                    Label(leftButtonText, systemImage: "xmark")
+                    Label("종료", systemImage: "xmark")
                 }
                 Spacer()
                 Button(action: handleRightButtonClick) {
                     Label(rightButtonText, systemImage: rightButtonSymbolName)
                 }
+                .disabled(status == .initializing)
             }
             .font(.subheadline.bold())
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button(action: {
-                    stopTimer()
-                    navigateBack()
-                }, label: {
+                Button(action: closeTimer, label: {
                     Image(systemName: "chevron.left")
                         .foregroundStyle(.secondary)
                 })
