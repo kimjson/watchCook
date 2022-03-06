@@ -55,8 +55,10 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "32">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/&#x110b;&#x116a;&#x110e;&#x1175;&#x110f;&#x116e;&#x11a8;">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3F9EC88127A68DB300281943"
@@ -64,7 +66,7 @@
             BlueprintName = "watchCook WatchKit App"
             ReferencedContainer = "container:watchCook.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -73,8 +75,10 @@
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES"
       launchAutomaticallySubstyle = "32">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/&#x110b;&#x116a;&#x110e;&#x1175;&#x110f;&#x116e;&#x11a8;">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3F9EC88127A68DB300281943"
@@ -82,7 +86,16 @@
             BlueprintName = "watchCook WatchKit App"
             ReferencedContainer = "container:watchCook.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "3F9EC88127A68DB300281943"
+            BuildableName = "watchCook WatchKit App.app"
+            BlueprintName = "watchCook WatchKit App"
+            ReferencedContainer = "container:watchCook.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
