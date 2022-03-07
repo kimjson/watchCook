@@ -139,20 +139,25 @@ struct RecipeDetail: View {
         List {
             ForEach(0..<formData.steps.count, id: \.self) { i in
                 VStack(spacing: 0) {
-                    TextEditor(
-                        text: $formData.steps[i].text
-                    )
-                        .focused($focusedIndex, equals: i)
-                        .onChange(of: focusedIndex) { focusedIndex in
-                            if let targetStep = recipe.getStepAt(index: i) {
-                                if targetStep.text != formData.steps[i].text {
-                                    recipe.stepArray[i].text = formData.steps[i].text
-                                    try? moc.save()
+                    // ZStack과 의미 없는 텍스트를 추가한 이유: https://stackoverflow.com/questions/62620613/dynamic-row-hight-containing-texteditor-inside-a-list-in-swiftui 참조.
+                    ZStack {
+                        TextEditor(
+                            text: $formData.steps[i].text
+                        )
+                            .focused($focusedIndex, equals: i)
+                            .onChange(of: focusedIndex) { focusedIndex in
+                                if let targetStep = recipe.getStepAt(index: i) {
+                                    if targetStep.text != formData.steps[i].text {
+                                        recipe.stepArray[i].text = formData.steps[i].text
+                                        try? moc.save()
+                                    }
                                 }
                             }
-                        }
-                        .disableAutocorrection(true)
-                        .lineSpacing(4)
+                            .disableAutocorrection(true)
+                            .lineSpacing(4)
+                        
+                        Text("공간을 확보하기 위한 의미 없는 텍스트").opacity(0).padding(.all, 8)
+                    }
                         
                     HStack {
                         Button(action: {
